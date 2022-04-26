@@ -1,4 +1,174 @@
 body {
     padding: 0%;
     margin: 0%;
+    height: 100vh;
+    width: 100%;
+    background-color: aliceblue;
 }
+/* Los backgrounds son para verificar que los boxes esten correctos */
+
+/*----------------------------------------- Header -----------------------------------------*/
+header {
+    height: 10%;
+    width: auto;
+    padding: 0%;
+    margin: 0%;
+    background-color: red;
+}
+
+.saludo_usuario {
+    display: inline-block;
+    background-color: aqua;
+    width: 25%;
+    height: 100%;
+    margin: 0%;
+    padding: 0%;
+    text-align: center;
+}
+
+.logo_empresa {
+    display: inline-block;
+    position: absolute;
+    background-color: black;
+    width: 10%;
+    height: 10%;
+    margin: 0%;
+    padding: 0%;
+    top: 0%;
+    left: 45%;
+}
+
+.cerrar_sesion {
+    background-color: beige;
+    width: 25%;
+    height: 100%;
+    margin: 0%;
+    padding: 0%;
+    text-align: center;
+    float: right;
+}
+
+/*----------------------------------------- Fin Header -----------------------------------------*/
+
+
+
+/*----------------------------------------- Main -----------------------------------------*/
+
+main {
+    height: 87.9%;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+    padding-top: .5%;
+    padding-bottom: .5%;
+    background-color: blue;
+}
+
+/*++++++++ Farmaceutico_home ++++++++*/
+.box_paciente {
+    float: left;
+    height: 100%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: 1%;
+    margin-right: .5%;
+    padding: 0%;
+    background-color: whitesmoke;
+}
+
+.img_paciente {
+    float: left;
+    background-color: blueviolet;
+    height: 30%;
+    width: 30%;
+    margin: 1%;
+    margin-right: .5%;
+}
+
+.buscador_paciente {
+    float: right;
+    background-color: blueviolet;
+    height: 30%;
+    width: 66.5%;
+    margin: 1%;
+}
+
+.informacion_medicamentos {
+    float: left;
+    background-color: blueviolet;
+    height: 65%;
+    width: 48%;
+    margin: 1%;
+    margin-top: .5%;
+    margin-right: .5%;
+}
+
+.calendario_entrega {
+    float: right;
+    background-color: blueviolet;
+    height: 65%;
+    width: 48%;
+    margin: 1%;
+    margin-top: .5%;
+}
+
+.box_stock {
+    float: right;
+    height: 80%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: .5%;
+    margin-right: 1%;
+    padding: 0%;
+    background-color: whitesmoke;
+}
+
+.informacion_stock {
+    float: left;
+    background-color: chartreuse;
+    height: 97%;
+    width: 48%;
+    margin: 1%;
+}
+
+.buscador_stock {
+    float: right;
+    background-color: chartreuse;
+    height: 97%;
+    width: 48%;
+    margin: 1%;
+}
+
+
+.modificar_stock {
+    float: right;
+    background-color: brown;
+    height: 17.5%;
+    width: 23.5%;
+    margin: 0%;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: .5%;
+    padding: 0%;
+}
+
+.revisar_receta_medica {
+    display: inline-block;
+    background-color: gray;
+    height: 17.5%;
+    width: 23.5%;
+    margin: 0%;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: .5%;
+    padding: 0%;
+}
+
+/*++++++++ Fin Farmaceutico_home ++++++++*/
+
+/*++++++++ Farmaceutico_revisar_receta ++++++++*/
+
+/*++++++++ Fin Farmaceutico_revisar_receta ++++++++*/
+
+
+/*----------------------------------------- Fin Main -----------------------------------------*/
