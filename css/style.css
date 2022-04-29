@@ -97,7 +97,7 @@ main {
 .informacion_medicamentos {
     float: left;
     background-color: blueviolet;
-    height: 65%;
+    height: 66%;
     width: 48%;
     margin: 1%;
     margin-top: .5%;
@@ -107,7 +107,7 @@ main {
 .calendario_entrega {
     float: right;
     background-color: blueviolet;
-    height: 65%;
+    height: 66%;
     width: 48%;
     margin: 1%;
     margin-top: .5%;
@@ -167,9 +167,157 @@ main {
 
 /*++++++++ Fin Farmaceutico_home ++++++++*/
 
+
 /*++++++++ Farmaceutico_revisar_receta ++++++++*/
+
+.receta_medica {
+    float: left;
+    background-color: burlywood;
+    height: 100%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: 1%;
+    margin-right: .5%;
+}
+
+.buscar_receta {
+    float: right;
+    background-color: blanchedalmond;
+    height: 10%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: .5%;
+    margin-right: 1%;
+}
+
+.box_medicamentos {
+    float: right;
+    background-color: chartreuse;
+    height: 67.5%;
+    width: 48.5%;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: .5%;
+}
+
+.medicamentos_solicitados {
+    float: left;
+    background-color: white;
+    height: 97%;
+    width: 48%;
+    margin: 1%;
+}
+
+.disponibilidad_medicamentos {
+    float: right;
+    background-color: white;
+    height: 97%;
+    width: 48%;
+    margin: 1%;
+}
+
+.agendar_entrega {
+    float: right;
+    background-color: coral;
+    height: 17.5%;
+    width: 23.5%;
+    margin: 0%;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: .5%;
+    padding: 0%;
+}
+
+.dar_medicamento {
+    display: inline-block;
+    background-color: gray;
+    height: 17.6%;
+    width: 23.5%;
+    margin: 0%;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: .5%;
+    padding: 0%;
+}
 
 /*++++++++ Fin Farmaceutico_revisar_receta ++++++++*/
 
+
+/*++++++++ Medico_home ++++++++*/
+
+.informacion_paciente {
+    float: left;
+    background-color: blueviolet;
+    height: 66%;
+    width: 98%;
+    margin: 1%;
+    margin-top: .5%;
+    margin-right: .5%;
+}
+
+.hacer_receta_medica {
+    float: right;
+    background-color: black;
+    height: 17.6%;
+    width: 48.5%;
+    margin-top: 1%;
+    margin-right: 1%;
+}
+
+/*++++++++ Fin Medico_home ++++++++*/
+
+
+/*++++++++ Receta_medica ++++++++*/
+
+.formulario_consulta {
+    float: left;
+    background-color: cyan;
+    height: 100%;
+    width: 58%;
+    margin-left: 1%;
+}
+
+.datos_paciente {
+    float: right;
+    background-color: darkgoldenrod;
+    height: 38.75%;
+    width: 39%;
+    margin-right: 1%;
+}
+
+.medicamento_registrar {
+    float: right;
+    background-color: darkgreen;
+    height: 38.75%;
+    width: 39%;
+    margin-right: 1%;
+    margin-top: 1%;
+}
+
+.cancelar_receta {
+    float: right;
+    background-color: coral;
+    height: 17.5%;
+    width: 18.7%;
+    margin: 0%;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: .5%;
+    padding: 0%;
+}
+
+.finalizar_receta {
+    display: inline-block;
+    background-color: gray;
+    height: 17.5%;
+    width: 18.7%;
+    margin: 0%;
+    margin-top: 1%;
+    margin-right: .5%;
+    margin-left: 1%;
+    padding: 0%;
+}
+
+/*++++++++ Fin Receta_medica ++++++++*/
 
 /*----------------------------------------- Fin Main -----------------------------------------*/
