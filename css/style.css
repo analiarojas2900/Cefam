@@ -5,47 +5,6 @@ body {
     width: 100%;
     background-color: aliceblue;
 }
-/* Los backgrounds son para verificar que los boxes esten correctos */
-
-/*----------------------------------------- Header -----------------------------------------*/
-
-
-
-.saludo_usuario {
-    display: inline-block;
-    background-color: aqua;
-    width: 25%;
-    height: 100%;
-    margin: 0%;
-    padding: 0%;
-    text-align: center;
-}
-
-.logo_empresa {
-    display: inline-block;
-    position: absolute;
-    background-color: black;
-    width: 10%;
-    height: 10%;
-    margin: 0%;
-    padding: 0%;
-    top: 0%;
-    left: 45%;
-}
-
-.cerrar_sesion {
-    background-color: beige;
-    width: 25%;
-    height: 100%;
-    margin: 0%;
-    padding: 0%;
-    text-align: center;
-    float: right;
-}
-
-/*----------------------------------------- Fin Header -----------------------------------------*/
-
-
 
 /*----------------------------------------- Main -----------------------------------------*/
 
@@ -68,6 +27,7 @@ main {
     margin-left: 1%;
     margin-right: .5%;
     padding: 0%;
+    border: solid black;
     background-color: whitesmoke;
 }
 
@@ -115,6 +75,7 @@ main {
     margin-left: .5%;
     margin-right: 1%;
     padding: 0%;
+    border: solid black;
     background-color: whitesmoke;
 }
 
@@ -139,6 +100,7 @@ main {
     float: right;
     height: 17.8%;
     width: 48.5%;
+    border: solid black;
     background-color: whitesmoke;
     margin: 0%;
     margin-top: 1%;
@@ -172,6 +134,7 @@ main {
 
 .receta_medica {
     float: left;
+    border: solid black;
     background-color: whitesmoke;
     height: 100%;
     width: 48.5%;
@@ -182,6 +145,7 @@ main {
 
 .buscar_receta {
     float: right;
+    border: solid black;
     background-color: whitesmoke;
     height: 10%;
     width: 48.5%;
@@ -192,6 +156,7 @@ main {
 
 .box_medicamentos {
     float: right;
+    border: solid black;
     background-color: whitesmoke;
     height: 67.5%;
     width: 48.5%;
@@ -220,6 +185,7 @@ main {
     float: right;
     height: 17.8%;
     width: 48.5%;
+    border: solid black;
     background-color: whitesmoke;
     margin: 0%;
     margin-top: 1%;
@@ -263,6 +229,7 @@ main {
 
 .hacer_receta_medica {
     float: right;
+    border: solid black;
     background-color: whitesmoke;
     height: 17.6%;
     width: 48.5%;
@@ -277,6 +244,7 @@ main {
 
 .formulario_consulta {
     float: left;
+    border: solid black;
     background-color: whitesmoke;
     height: 100%;
     width: 58%;
@@ -285,14 +253,31 @@ main {
 
 .datos_paciente {
     float: right;
+    border: solid black;
     background-color: whitesmoke;
     height: 38.75%;
     width: 39%;
     margin-right: 1%;
 }
 
+
+
+.box_opciones_receta_medica {
+    float: right;
+    height: 17.8%;
+    width: 39%;
+    border: solid black;
+    background-color: whitesmoke;
+    margin: 0%;
+    margin-top: 1%;
+    margin-left: .5%;
+    margin-right: 1%;
+    padding: 0%;
+}
+
 .medicamento_registrar {
     float: right;
+    border: solid black;
     background-color: whitesmoke;
     height: 38.75%;
     width: 39%;
@@ -302,25 +287,19 @@ main {
 
 .cancelar_receta {
     float: right;
-    background-color: coral;
-    height: 17.5%;
-    width: 18.7%;
-    margin: 0%;
-    margin-top: 1%;
-    margin-right: 1%;
-    margin-left: .5%;
+    border: solid black;
+    height: 89%;
+    width: 48%;
+    margin: 1%;
     padding: 0%;
 }
 
 .finalizar_receta {
-    display: inline-block;
-    background-color: gray;
-    height: 17.5%;
-    width: 18.7%;
-    margin: 0%;
-    margin-top: 1%;
-    margin-right: .5%;
-    margin-left: 1%;
+    float: right;
+    border: solid black;
+    height: 89%;
+    width: 48%;
+    margin: 1%;
     padding: 0%;
 }
 
@@ -336,5 +315,13 @@ footer {
     height: 17%;
     background-color: aquamarine;
 }
+
+button{
+	margin: 4px;
+	height: 10%;
+	margin-top: -3px;
+}
+
+
 
 /*----------------------------------------- Fin Footer -----------------------------------------*/
