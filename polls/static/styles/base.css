@@ -1,0 +1,43 @@
+body {
+    padding: 0%;
+    margin: 0%;
+    height: 100vh;
+    width: 100%;
+    background-color: aliceblue;
+    scroll-behavior: smooth;
+}
+
+
+/*----------------------------------------- Main -----------------------------------------*/
+
+main {
+    height: 90%;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+    padding-top: .5%;
+    padding-bottom: .5%;
+    background-color: #44bba4;
+}
+
+/*----------------------------------------- Fin Main -----------------------------------------*/
+
+
+/*----------------------------------------- Footer -----------------------------------------*/
+
+footer {
+    height: 17%;
+    background-color: aquamarine;
+}
+
+button {
+    margin: 3px;
+    height: 10%;
+    margin-top: -3px;
+}
+
+.salir {
+    margin: 10px
+}
+
+/*----------------------------------------- Fin Footer -----------------------------------------*/

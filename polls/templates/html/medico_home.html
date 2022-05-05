@@ -4,29 +4,42 @@
 
 {% block titulo %}Medico{% endblock %}
 
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/farmaceutico_home.css' %}">
+<link rel="stylesheet" href="{% static 'styles/medico_home.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block link0 %}
+<a class="nav-link active" aria-current="page" href="{% url 'medico_home' %}">Inicio</a>
+{% endblock %}
+
+{% block link2 %}
+<a class="nav-link active" aria-current="page" href="{% url 'medico_receta_medica' %}">Dar Receta medica</a>
+{% endblock %}
+
 {% block main %}
   <div class='box_paciente'>
     <div class='img_paciente'>
-
+      <p>img_paciente</p>
     </div>
     <div class='buscador_paciente'>
-
+      <p>buscador_paciente</p>
     </div>
     <div class='informacion_paciente'>
-
+      <p>informacion_paciente</p>
     </div>
   </div>
 
   <div class='box_stock'>
     <div class='informacion_stock'>
-
+      <p>informacion_stock</p>
     </div>
     <div class='buscador_stock'>
-
+      <p>buscador_stock</p>
     </div>
   </div>
 
   <div class='hacer_receta_medica'>
-
+    <a href="{% url 'medico_receta_medica' %}">Receta Medica</a>
   </div>
 {% endblock %}

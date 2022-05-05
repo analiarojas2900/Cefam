@@ -1,0 +1,209 @@
+/*++++++++ Farmaceutico_revisar_receta ++++++++*/
+
+.receta_medica {
+    float: left;
+    border: solid black;
+    background-color: whitesmoke;
+    height: 100%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: 1%;
+    margin-right: .5%;
+}
+
+.buscar_receta {
+    float: right;
+    border: solid black;
+    background-color: whitesmoke;
+    height: 10%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: .5%;
+    margin-right: 1%;
+}
+
+.box_medicamentos {
+    float: right;
+    border: solid black;
+    background-color: whitesmoke;
+    height: 67.5%;
+    width: 48.5%;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: .5%;
+}
+
+.medicamentos_solicitados {
+    float: left;
+    border: solid black;
+    height: 97%;
+    width: 48%;
+    margin: 1%;
+}
+
+.disponibilidad_medicamentos {
+    float: right;
+    border: solid black;
+    height: 97%;
+    width: 48%;
+    margin: 1%;
+}
+
+.box_opciones_receta {
+    float: right;
+    height: 17.8%;
+    width: 48.5%;
+    border: solid black;
+    background-color: whitesmoke;
+    margin: 0%;
+    margin-top: 1%;
+    margin-left: .5%;
+    margin-right: 1%;
+    padding: 0%;
+}
+
+.agendar_entrega {
+    float: left;
+    border: solid black;
+    height: 89%;
+    width: 48%;
+    margin: 1%;
+    padding: 0%;
+}
+
+.agendar_entrega a {
+    background-color: #333;
+    color: whitesmoke;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.agendar_entrega a:hover {
+    background-color: whitesmoke;
+    color: #333;
+}
+
+.dar_medicamento {
+    float: right;
+    border: solid black;
+    height: 89%;
+    width: 48%;
+    margin: 1%;
+    padding: 0%;
+}
+
+.dar_medicamento a {
+    background-color: #333;
+    color: whitesmoke;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.dar_medicamento a:hover {
+    background-color: whitesmoke;
+    color: #333;
+}
+
+/*++++++++ Fin Farmaceutico_revisar_receta ++++++++*/
+
+@media (max-width: 768px) {
+    
+    body {
+        height: 200vh;
+    }
+
+    .buscar_receta {
+        height: 10%;
+        width: 98%;
+        margin: 1%;
+        float: left;
+    }
+
+    .receta_medica {
+        height: 35%;
+        width: 98%;
+        margin: 1%;
+    }
+    
+    .box_medicamentos {
+        height: 35%;
+        width: 98%;
+        margin: 1%;
+    }
+
+    .medicamentos_solicitados {
+        height: 95%;
+    }
+
+    .disponibilidad_medicamentos {
+        height: 95%;
+    }
+
+    .box_opciones_receta {
+        height: 13%;
+        width: 98%;
+        margin: 1%;
+    }
+
+}
+
+@media (max-width: 425px) {
+    
+    body {
+        height: 200vh;
+    }
+
+    .buscar_receta {
+        height: 10%;
+        width: 98%;
+        margin: 1%;
+        float: left;
+    }
+
+    .receta_medica {
+        height: 36.5%;
+        width: 98%;
+        margin: 1%;
+    }
+    
+    .box_medicamentos {
+        height: 36.5%;
+        width: 98%;
+        margin: 1%;
+    }
+
+    .medicamentos_solicitados {
+        height: 97.5%;
+    }
+
+    .disponibilidad_medicamentos {
+        height: 97.5%;
+    }
+
+    .box_opciones_receta {
+        height: 13%;
+        width: 98%;
+        margin: 1%;
+    }
+
+    .agendar_entrega {
+        height: 93%;
+    }
+
+    .dar_medicamento {
+        height: 93%;
+    }
+
+}
