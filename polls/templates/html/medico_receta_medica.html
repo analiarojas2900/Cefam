@@ -4,26 +4,37 @@
 
 {% block titulo %}Medico{% endblock %}
 
-{% block main %}
-  <div class='formulario_consulta'>
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/medico_receta_medica.css' %}?{% now 'U' %}">
+{% endblock %}
 
+{% block link0 %}
+<a class="nav-link active" aria-current="page" href="{% url 'medico_home' %}">Inicio</a>
+{% endblock %}
+
+{% block link2 %}
+<a class="nav-link active" aria-current="page" href="{% url 'medico_receta_medica' %}">Dar Receta medica</a>
+{% endblock %}
+
+{% block main %}
+  <div class='datos_paciente'>
+    <p>datos_paciente</p>
   </div>
 
-  <div class='datos_paciente'>
-
+  <div class='formulario_consulta'>
+    <p>formulario_consulta</p>
   </div>
 
   <div class='medicamento_registrar'>
-
+    <p>medicamento_registrar</p>
   </div>
 
   <div class="box_opciones_receta_medica">
     <div class='cancelar_receta'>
-
+      <a href="{% url 'medico_home' %}">Cancelar Receta</a>
     </div>
-
     <div class='finalizar_receta'>
-
+      <a href="{% url 'medico_home' %}">Finalizar Receta</a>
     </div>
   </div>
 {% endblock %}

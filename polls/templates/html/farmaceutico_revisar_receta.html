@@ -4,31 +4,46 @@
 
 {% block titulo %}Farmaceutico{% endblock %}
 
-{% block main %}
-  <div class='receta_medica'>
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/farmaceutico_revisar_receta.css' %}">
+{% endblock %}
 
+{% block link0 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farmaceutico_home' %}">Inicio</a>
+{% endblock %}
+
+{% block link1 %}
+<a class="nav-link" href="#">Modificar stock</a>
+{% endblock %}
+
+{% block link2 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farmaceutico_revisar_receta' %}">Recetas medicas</a>
+{% endblock %}
+
+{% block main %}
+  <div class='buscar_receta'>
+    <p>buscar_receta</p>
   </div>
 
-  <div class='buscar_receta'>
-
+  <div class='receta_medica'>
+    <p>receta_medica</p>
   </div>
 
   <div class='box_medicamentos'>
     <div class='medicamentos_solicitados'>
-
+      <p>medicamentos_solicitados</p>
     </div>
     <div class='disponibilidad_medicamentos'>
-
+      <p>disponibilidad_medicamentos</p>
     </div>
   </div>
 
   <div class="box_opciones_receta">
     <div class='agendar_entrega'>
-
+      <a href="#">Agendar Entrega</a>
     </div>
-    
     <div class='dar_medicamento'>
-
+      <a href="{% url 'farmaceutico_home' %}">Dar Medicamento</a>
     </div>
   </div>
 {% endblock %}
