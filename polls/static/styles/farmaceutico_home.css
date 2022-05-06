@@ -61,18 +61,18 @@
 }
 
 .informacion_stock {
-    float: left;
+    float: right;
     border: solid black;
-    height: 97%;
-    width: 48%;
+    height: 68%;
+    width: 98%;
     margin: 1%;
 }
 
 .buscador_stock {
-    float: right;
+    float: left;
     border: solid black;
-    height: 97%;
-    width: 48%;
+    height: 25%;
+    width: 98%;
     margin: 1%;
 }
 
@@ -141,6 +141,12 @@
 .revisar_receta_medica a:hover {
     background-color: whitesmoke;
     color: #333;
+}
+
+.d-flex{
+    padding: 1px 200px;
+    justify-content: center;
+    align-items: center;
 }
 
 /*++++++++ Fin Farmaceutico_home ++++++++*/
