@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block titulo %}Farmaceutico{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/farmaceutico_home.css' %}">
+{% endblock %}
+
+{% block link0 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farmaceutico_home' %}">Inicio</a>
+{% endblock %}
+
+{% block link1 %}
+<a class="nav-link" href="#">Modificar stock</a>
+{% endblock %}
+
+{% block link2 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farmaceutico_revisar_receta' %}">Recetas medicas</a>
+{% endblock %}
+
+
+{% block main %}
+  <div class='box_paciente'>
+    <div class='img_paciente'>
+      <p>img_pacient</p>
+    </div>
+    <div class='buscador_paciente'>
+      <p>buscador_paciente</p>
+    </div>
+    <div class='informacion_medicamentos'>
+      <p>informacion_medicamentos</p>
+    </div>
+    <div class='calendario_entrega'>
+      <p>calendario_entrega</p>    
+    </div>
+  </div>
+
+  <div class='box_stock'>
+    <div class='informacion_stock'>
+      <p>informacion_stock</p>
+    </div>
+    <div class='buscador_stock'>
+      <p>buscador_stock</p>
+    </div>
+  </div>
+
+  <div class="box_opciones">
+    <div class='modificar_stock'>
+      <a href="#">Modificar Stock</a>
+    </div>
+    <div class='revisar_receta_medica'>
+      <a href="{% url 'farmaceutico_revisar_receta' %}">Revisar receta medica</a>  
+    </div>
+  </div>        
+{% endblock %}
