@@ -27,7 +27,7 @@ main {
     width: 350px;
     margin-top: auto;
     margin-bottom: auto;
-    background: #f39c12;
+    background: #44bba4;
     position: relative;
     display: flex;
     justify-content: center;
@@ -45,7 +45,7 @@ main {
     width: 170px;
     top: -75px;
     border-radius: 50%;
-    background: #60a3bc;
+    background: #44bba4;
     padding: 10px;
     text-align: center;
 }
@@ -54,7 +54,7 @@ main {
     height: 150px;
     width: 150px;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 2px solid black;
 }
 
 .form_container {
