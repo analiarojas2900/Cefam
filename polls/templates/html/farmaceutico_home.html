@@ -25,7 +25,11 @@
 {% block main %}
   <div class='box_paciente'>
     <div class='img_paciente'>
-      <p>img_pacient</p>
+      {% for a in Paciente %}
+        {% if a.run_paciente == 20181438 %}
+          <img src="{{ a.img_paciente.url }}">
+        {% endif %}
+      {% endfor %}
     </div>
     <div class='buscador_paciente'>
       <p>buscador_paciente</p>

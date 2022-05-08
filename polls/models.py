@@ -1,5 +1,5 @@
 from contextlib import nullcontext
-from pyexpat import model
+from tkinter import CASCADE
 from django.db import models
 
 # Create your models here.
@@ -16,8 +16,8 @@ class Paciente(models.Model):
     mail_paciente = models.CharField(max_length=25)
     numero_telefonico = models.CharField(max_length=12)
     img_paciente = models.ImageField(upload_to='img_paciente', null=True)
-
-    def __str__(self):
+    
+    def __init__(self):
         return self.run_paciente
 
 
@@ -31,9 +31,6 @@ class Medico(models.Model):
     sexo_medico = models.CharField(max_length=1)
     edad_medico = models.IntegerField()
 
-    def __str__(self):
-        return self.id_medico
-
 
 #Medicamento
 class Medicamento(models.Model):
@@ -42,28 +39,6 @@ class Medicamento(models.Model):
     fecha_elab_medicamento = models.DateField()
     fecha_venc_medicamento = models.DateField()
     cantidad_medicamento = models.IntegerField()
-
-    def __str__(self):
-        return self.id_medicamento
-
-
-#Stock_actual
-class Stock_actual(models.Model):
-    id_stock_actual = models.AutoField(primary_key=True)
-    id_medicamento = models.ForeignKey('Medicamento', on_delete=models.CASCADE, default=None)
-
-    def __str__(self):
-        return self.id_stock_actual
-
-
-#Stock_llegada
-class Stock_llegada(models.Model):
-    id_stock_llegada = models.AutoField(primary_key=True)
-    fecha_llegada = models.DateField()
-    id_medicamento = models.ForeignKey('Medicamento', on_delete=models.CASCADE, default=None)
-
-    def __str__(self):
-        return self.id_stock_llegada
 
 
 #Receta_medica
@@ -75,9 +50,6 @@ class Receta_medica(models.Model):
     id_medicamento = models.ForeignKey('Medicamento', on_delete=models.CASCADE, default=None)
     run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
 
-    def __str__(self):
-        return self.id_receta
-
 
 #Ficha_paciente
 class Ficha_paciente(models.Model):
@@ -85,9 +57,6 @@ class Ficha_paciente(models.Model):
     fecha_retiro = models.DateField()
     run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
     id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE, default=None)
-
-    def __str__(self):
-        return self.id_ficha
 
 
 #Farmaceutico
@@ -99,9 +68,19 @@ class Farmaceutico(models.Model):
     apellido_farmaceutico = models.CharField(max_length=25)
     edad_farmaceutico = models.IntegerField()
     sexo_farmaceutico = models.CharField(max_length=1)
-    id_stock_actual = models.ForeignKey('Stock_actual', on_delete=models.CASCADE, default=None)
-    id_stock_llegada = models.ForeignKey('Stock_llegada', on_delete=models.CASCADE, default=None)
-    id_ficha = models.ForeignKey('Ficha_Paciente', on_delete=models.CASCADE, default=None)
+    
 
-    def __str__(self):
-        return self.id_farmaceutico
+#Usuario
+class Usuario(models.Model):
+    id_usuario = models.AutoField(primary_key=True)
+    usr = models.CharField(max_length=25)
+    psw = models.CharField(max_length=25)
+    tipo = models.CharField(max_length=25)
+    
+#Entrega Medicamentos
+class Entrega_medicamentos(models.Model):
+    id_entrega = models.AutoField(primary_key=True)
+    cantidad_entregada = models.IntegerField()
+    id_ficha = models.ForeignKey('Ficha_paciente', on_delete=models.CASCADE)
+    id_farmaceutico = models.ForeignKey('Farmaceutico', on_delete=models.CASCADE)
+    id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE) 
