@@ -20,6 +20,7 @@
 <a class="nav-link active" aria-current="page" href="{% url 'farmaceutico_revisar_receta' %}">Recetas medicas</a>
 {% endblock %}
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 {% block main %}
   <div class='box_paciente'>
@@ -32,6 +33,10 @@
     </div>
     <div class='buscador_paciente'>
       <p>buscador_paciente</p>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
     <div class='informacion_medicamentos'>
       <p>informacion_medicamentos</p>
@@ -42,13 +47,17 @@
   </div>
 
   <div class='box_stock'>
+    <div class='buscador_stock'>
+      <p>buscador_stock</p>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
     <div class='informacion_stock'>
       <p>informacion_stock</p>
     </div>
-    <div class='buscador_stock'>
-      <p>buscador_stock</p>
     </div>
-  </div>
 
   <div class="box_opciones">
     <div class='modificar_stock'>
@@ -56,6 +65,8 @@
     </div>
     <div class='revisar_receta_medica'>
       <a href="{% url 'farmaceutico_revisar_receta' %}">Revisar receta medica</a>  
+      
     </div>
-  </div>        
+  </div>     
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>   
 {% endblock %}
