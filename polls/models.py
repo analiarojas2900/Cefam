@@ -1,4 +1,5 @@
 from contextlib import nullcontext
+from pyexpat import model
 from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -28,6 +29,7 @@ class Personal(models.Model):
     mail_personal = models.EmailField()
     sexo_personal = models.CharField(max_length=1)
     edad_personal = models.IntegerField()
+    tipo = models.CharField(max_length=25)
     
 
 #Medicamento

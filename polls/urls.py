@@ -8,5 +8,6 @@ urlpatterns = [
     path('farmaceutico_revisar_receta/', views.farmaceutico_revisar_receta, name='farmaceutico_revisar_receta'),
     path('medico_home/', views.medico_home, name='medico_home'),
     path('medico_receta_medica/', views.medico_receta_medica, name='medico_receta_medica'),
-    path('logout/', logout_then_login, name= 'logout')
+    path('desconectar/', views.desconectar, name= 'desconectar'),
+    path('admin_creacion/', views.admin_creacion, name='admin_creacion'),
 ]

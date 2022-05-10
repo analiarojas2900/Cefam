@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}Admin{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/admin_creacion.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block main %}
+    <!-- https://simpleisbetterthancomplex.com/tutorial/2018/11/28/advanced-form-rendering-with-django-crispy-forms.html
+    Referencia para usar crispy_forms -->
+    <div action = 'agregar_personal' class = 'box_formulario'>
+        <form method='post' action='{% url 'admin_creacion' %}'>
+            {% csrf_token %}
+            <table>
+                {{ form|crispy }}
+            </table>
+            <input type='submit' class='btn btn-primary' value='Registrar'>
+        </form>
+    </div>
+{% endblock %}

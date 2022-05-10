@@ -1,0 +1,9 @@
+.box_formulario {
+    height: 90%;
+    width: 50%;
+    border: solid black;
+    background-color: whitesmoke;
+    margin: auto;
+    margin-top: 2%;
+    padding: 0%;
+}
