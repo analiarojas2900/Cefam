@@ -8,8 +8,8 @@ from django.contrib.auth.models import AbstractUser
 
 #Paciente
 class Paciente(models.Model):
-    run_paciente = models.IntegerField(primary_key=True)
-    dv_paciente = models.IntegerField()
+    run_paciente = models.CharField(max_length=8)
+    dv_paciente = models.CharField(max_length=1)
     nombre_paciente = models.CharField(max_length=25)
     apellido_paciente = models.CharField(max_length=25)
     edad_paciente = models.IntegerField()
@@ -17,47 +17,58 @@ class Paciente(models.Model):
     direccion_paciente = models.CharField(max_length=60)
     mail_paciente = models.CharField(max_length=25)
     numero_telefonico = models.CharField(max_length=12)
-    img_paciente = models.ImageField(upload_to='img_paciente', null=True)
+    img_paciente = models.ImageField(upload_to='media')
+
+    def __str__(self):
+        return self.run_paciente
 
 #Personal
 class Personal(models.Model):
-    id_personal = models.AutoField(primary_key=True)
-    run_personal = models.IntegerField()
-    dv_personal = models.IntegerField()
+    run_personal = models.CharField(max_length=8)
+    dv_personal = models.CharField(max_length=1)
     nombre_personal = models.CharField(max_length=25)
     apellido_personal = models.CharField(max_length=25)
     mail_personal = models.EmailField()
     sexo_personal = models.CharField(max_length=1)
-    edad_personal = models.IntegerField()
+    edad_personal = models.CharField(max_length=3)
     tipo = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.run_personal
     
 
 #Medicamento
 class Medicamento(models.Model):
-    id_medicamento = models.AutoField(primary_key=True)
     nombre_medicamento = models.CharField(max_length=25)
     fecha_elab_medicamento = models.DateField()
     fecha_venc_medicamento = models.DateField()
-    cantidad_medicamento = models.IntegerField()
+    cantidad_medicamento = models.CharField(max_length=4)
+
+    def __str__(self):
+        return self.nombre_medicamento
 
 
 #Receta_medica
 class Receta_medica(models.Model):
-    id_receta = models.AutoField(primary_key=True)
     prescripcion_receta = models.TextField(max_length=200)
     fecha_receta = models.DateField()
-    id_medico = models.ForeignKey('Personal', on_delete=models.CASCADE, default=None)
+    id_personal = models.ForeignKey('Personal', on_delete=models.CASCADE, default=None)
     id_medicamento = models.ForeignKey('Medicamento', on_delete=models.CASCADE, default=None)
-    run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
+    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
+
+    def __str__(self):
+        return self.prescripcion_receta
 
 
 #Ficha_paciente
 class Ficha_paciente(models.Model):
-    id_ficha = models.AutoField(primary_key=True)
+    tipo_ficha = models.CharField(max_length=25)
     fecha_retiro = models.DateField()
-    run_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
+    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
     id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE, default=None)
     
+    def __str__(self):
+        return self.tipo_ficha
 
 #CustomUsuario
 class CustomUsuario(AbstractUser):
@@ -68,8 +79,11 @@ class CustomUsuario(AbstractUser):
     
 #Entrega Medicamentos
 class Entrega_medicamentos(models.Model):
-    id_entrega = models.AutoField(primary_key=True)
-    cantidad_entregada = models.IntegerField()
+    tipo_entrega = models.CharField(max_length=25)
+    cantidad_entregada = models.CharField(max_length=4)
     id_ficha = models.ForeignKey('Ficha_paciente', on_delete=models.CASCADE)
-    id_farmaceutico = models.ForeignKey('Personal', on_delete=models.CASCADE, default=None)
+    id_personal = models.ForeignKey('Personal', on_delete=models.CASCADE, default=None)
     id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE) 
+
+    def __str__(self):
+        return self.tipo_entrega

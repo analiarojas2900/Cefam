@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 from django.urls import reverse_lazy
@@ -126,6 +127,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGOUT_REDIRECT_URL = reverse_lazy('registrar/iniciar_sesion.html')
+LOGOUT_REDIRECT_URL = reverse_lazy('iniciar_sesion')
 
 AUTH_USER_MODEL = 'polls.CustomUsuario'
+
+MEDIA_URL = '/image/'

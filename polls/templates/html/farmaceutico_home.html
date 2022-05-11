@@ -1,11 +1,12 @@
 {% extends 'base/base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block titulo %}Farmaceutico{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'styles/farmaceutico_home.css' %}">
+<link rel="stylesheet" href="{% static 'styles/farmaceutico_home.css' %}?{% now 'U' %}">
 {% endblock %}
 
 {% block link0 %}
@@ -24,40 +25,40 @@
 
 {% block main %}
   <div class='box_paciente'>
-    <div class='img_paciente'>
-      {% for a in Paciente %}
-        {% if a.run_paciente == 20181438 %}
-          <img src="{{ a.img_paciente.url }}">
-        {% endif %}
-      {% endfor %}
-    </div>
     <div class='buscador_paciente'>
-      <p>buscador_paciente</p>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex" method='GET' action='{% url 'farmaceutico_home' %}'>
+        <input name='buscador_paciente' type='search' placeholder='Buscador'>
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
       </form>
     </div>
-    <div class='informacion_medicamentos'>
-      <p>informacion_medicamentos</p>
+    {% for p in paciente %}
+    <div class='img_paciente'>
+      <img src='{{ p.img_paciente.url }}' width='100%' height='100%'>
     </div>
-    <div class='calendario_entrega'>
-      <p>calendario_entrega</p>    
+    <div class='informacion_paciente'>
+      <h2>{{ p.run_paciente }}</h2>
+      <h2>{{ p.dv_paciente }}</h2>
+      <h2>{{ p.nombre_paciente }}</h2>
+      <h2>{{ p.apellido_paciente }}</h2>
+      <h2>{{ p.edad_paciente }}</h2>
+      <h2>{{ p.sexo_paciente }}</h2>
+      <h2>{{ p.direccion_paciente }}</h2>
+      <h2>{{ p.mail_paciente }}</h2>
+      <h2>{{ p.numero_telefonico }}</h2>
     </div>
-  </div>
+    {% endfor %}
+  </div>  
 
   <div class='box_stock'>
-    <div class='buscador_stock'>
-      <p>buscador_stock</p>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
     <div class='informacion_stock'>
-      <p>informacion_stock</p>
+      {% for s in medicamento %}
+      <h2>{{ s.nombre_medicamento }}</h2>
+      <p>{{ s.fecha_elab_medicamento }}</p>
+      <p>{{ s.fecha_venc_medicamento }}</p>
+      <p>{{ s.cantidad_medicamento }}</p>
+      {% endfor %}
     </div>
-    </div>
+  </div>
 
   <div class="box_opciones">
     <div class='modificar_stock'>
@@ -65,7 +66,6 @@
     </div>
     <div class='revisar_receta_medica'>
       <a href="{% url 'farmaceutico_revisar_receta' %}">Revisar receta medica</a>  
-      
     </div>
   </div>     
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>   

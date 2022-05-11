@@ -1,11 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Paciente, CustomUsuario, Personal
+from re import template
+from django.shortcuts import render, redirect
+from .models import Paciente, CustomUsuario, Personal, Medicamento
 from django.contrib.auth import authenticate, login, logout
 from .forms import creacion_personal
+from django.contrib import messages
+from django.db.models import Q
 
 # Create your views here.
 
 def iniciar_sesion(request):
+    if request.user.is_authenticated and request.user.is_medico:
+        return redirect(medico_home)
+    elif request.user.is_authenticated and request.user.is_farmaceutico:
+        return redirect(farmaceutico_home)
+    elif request.user.is_authenticated:
+        if request.user.is_admin or request.user.is_staff:
+            return redirect(admin_creacion)
+        
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -19,22 +30,29 @@ def iniciar_sesion(request):
             elif user.is_farmaceutico:
                 login(request, user)
                 return redirect(farmaceutico_home)
-            elif user.is_admin:
+            elif user.is_admin or user.is_staff:
                 login(request, user)
                 return redirect(admin_creacion)
             else:
+                messages.success(request, 'No se logro verificar su usuario, intentelo nuevamente')
                 return redirect(iniciar_sesion)
-
         else:
+            messages.success(request, 'No se logro verificar su usuario, intentelo nuevamente')
             return redirect(iniciar_sesion)
+
     return render(request, 'registration/iniciar_sesion.html')
 
 def farmaceutico_home(request):
-    paciente = Paciente.objects.all()
-    data = {
-        'paciente': paciente,
-    }
-    return render(request, 'html/farmaceutico_home.html', data)
+
+    buscar_paciente = request.GET.get('buscador_paciente')
+    medicamento = Medicamento.objects.all()
+
+    if buscar_paciente:
+        paciente = Paciente.objects.filter(Q(run_paciente = buscar_paciente))
+    else:
+        paciente = Paciente.objects.filter(Q(run_paciente = '1'))
+
+    return render(request, 'html/farmaceutico_home.html', {'paciente':paciente, 'medicamento':medicamento})
 
 def farmaceutico_revisar_receta(request):
     return render(request, 'html/farmaceutico_revisar_receta.html')
@@ -71,13 +89,13 @@ def admin_creacion(request):
             if tipo == 'is_farm':
                 user = CustomUsuario.objects.create_user(username = nombre[0:2] + '.' + apellido,
                 password = apellido[0].capitalize() + str(run) + '-' + str(dv),
-                is_admin = True)
+                is_farmaceutico = True)
                 user.save()
                 personal.save()
             elif tipo == 'is_med':
                 user = CustomUsuario.objects.create_user(username = nombre[0:2] + '.' + apellido,
                 password = apellido[0].capitalize() + str(run) + '-' + str(dv),
-                is_admin = True)
+                is_medico = True)
                 user.save()
                 personal.save()
             elif tipo == 'is_adm':
@@ -86,9 +104,11 @@ def admin_creacion(request):
                 is_admin = True)
                 user.save()
                 personal.save()
+            messages.success(request, 'Usuario creado correctamente, su cuenta: \nnombre: ' + nombre[0:2] + '.' + apellido +
+            '\ncontraseña: '+ apellido[0].capitalize() + str(run) + '-' + str(dv))
         return redirect(admin_creacion)
     return render(request, 'html/admin_creacion.html', {'form': creacion_personal})
 
 def desconectar(request):
     logout(request)
-    return redirect('iniciar_sesion')
+    return redirect('iniciar_sesion')    

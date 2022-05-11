@@ -93,4 +93,12 @@ main {
     background-color: #c0392b !important;
 }
 
+.messages {
+    display: block;
+    list-style: none;
+    background-color: gold;
+    color: black;
+    text-align: center;
+}
+
 /*++++++++ Fin login ++++++++*/
