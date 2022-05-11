@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import path, include
 from django.contrib.auth.views import logout_then_login
 from . import views
