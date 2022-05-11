@@ -7,3 +7,11 @@
     margin-top: 2%;
     padding: 0%;
 }
+
+.messages {
+    display: flexbox;
+    list-style: none;
+    background-color: gold;
+    color: black;
+    text-align: center;
+}

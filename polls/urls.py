@@ -1,6 +1,7 @@
-from django.shortcuts import redirect
-from django.urls import path, include
-from django.contrib.auth.views import logout_then_login
+from os import stat
+from django.conf import settings
+from django.urls import path
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -12,3 +13,6 @@ urlpatterns = [
     path('desconectar/', views.desconectar, name= 'desconectar'),
     path('admin_creacion/', views.admin_creacion, name='admin_creacion'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

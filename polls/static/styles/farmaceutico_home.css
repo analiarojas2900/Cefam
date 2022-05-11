@@ -29,11 +29,11 @@
     margin: 1%;
 }
 
-.informacion_medicamentos {
+.informacion_paciente {
     float: left;
     border: solid black;
     height: 66%;
-    width: 48%;
+    width: 98%;
     margin: 1%;
     margin-top: .5%;
     margin-right: .5%;
@@ -63,15 +63,7 @@
 .informacion_stock {
     float: right;
     border: solid black;
-    height: 68%;
-    width: 98%;
-    margin: 1%;
-}
-
-.buscador_stock {
-    float: left;
-    border: solid black;
-    height: 25%;
+    height: 97%;
     width: 98%;
     margin: 1%;
 }

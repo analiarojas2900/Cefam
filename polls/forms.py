@@ -13,13 +13,13 @@ tipos = (
 
 #Creacion_personal
 class creacion_personal(forms.Form):
-    run_personal = forms.IntegerField()
-    dv_personal = forms.IntegerField()
+    run_personal = forms.CharField(max_length=8)
+    dv_personal = forms.CharField(max_length=1)
     nombre_personal = forms.CharField(max_length=25)
     apellido_personal = forms.CharField(max_length=25)
     mail_personal = forms.EmailField()
     sexo_personal = forms.CharField(max_length=1)
-    edad_personal = forms.IntegerField()
+    edad_personal = forms.CharField(max_length=3)
     tipo = forms.ChoiceField(choices=tipos)
 
     class Meta:
