@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Paciente
+from .models import Paciente, CustomUsuario, Personal
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from .forms import creacion_personal
 
 # Create your views here.
@@ -16,18 +15,18 @@ def iniciar_sesion(request):
         if user is not None:
             if user.is_medico:
                 login(request, user)
-                return render(request, 'html/medico_home.html')
+                return redirect(medico_home)
             elif user.is_farmaceutico:
                 login(request, user)
-                return render(request, 'html/farmaceutico_home.html')
+                return redirect(farmaceutico_home)
             elif user.is_admin:
                 login(request, user)
-                return render(request, 'html/admin_creacion.html')  
+                return redirect(admin_creacion)
             else:
-                return redirect('registration/iniciar_sesion.html')
+                return redirect(iniciar_sesion)
 
         else:
-            return redirect('registration/iniciar_sesion.html')
+            return redirect(iniciar_sesion)
     return render(request, 'registration/iniciar_sesion.html')
 
 def farmaceutico_home(request):
@@ -56,30 +55,38 @@ def admin_creacion(request):
         form = creacion_personal(request.POST, request.FILES)
         print(request.FILES)
         if form.is_valid():
+            personal = Personal(run_personal = form.cleaned_data.get('run_personal'),
+            dv_personal = form.cleaned_data.get('dv_personal'),
+            nombre_personal = form.cleaned_data.get('nombre_personal'),
+            apellido_personal = form.cleaned_data.get('apellido_personal'),
+            mail_personal = form.cleaned_data.get('mail_personal'),
+            sexo_personal = form.cleaned_data.get('sexo_personal'),
+            edad_personal = form.cleaned_data.get('edad_personal'),
+            tipo = form.cleaned_data.get('tipo'))
             nombre = form.cleaned_data.get('nombre_personal')
             apellido = form.cleaned_data.get('apellido_personal')
             run = form.cleaned_data.get('run_personal')
             dv = form.cleaned_data.get('dv_personal')
             tipo = form.cleaned_data.get('tipo')
             if tipo == 'is_farm':
-                User.username = nombre[0:2] + '.' + apellido
-                User.password = apellido[0].capitalize() + str(run) + '-' + str(dv)
-                User.is_farmaceutico = True
-                User.save()
-                form.save()
+                user = CustomUsuario.objects.create_user(username = nombre[0:2] + '.' + apellido,
+                password = apellido[0].capitalize() + str(run) + '-' + str(dv),
+                is_admin = True)
+                user.save()
+                personal.save()
             elif tipo == 'is_med':
-                User.username = nombre[0:2] + '.' + apellido
-                User.password = apellido[0].capitalize() + str(run) + '-' + str(dv)
-                User.is_medico = True
-                User.save()
-                form.save()
+                user = CustomUsuario.objects.create_user(username = nombre[0:2] + '.' + apellido,
+                password = apellido[0].capitalize() + str(run) + '-' + str(dv),
+                is_admin = True)
+                user.save()
+                personal.save()
             elif tipo == 'is_adm':
-                User.username = nombre[0:2] + '.' + apellido
-                User.password = apellido[0].capitalize() + str(run) + '-' + str(dv)
-                User.is_admin = True
-                User.save()
-                form.save()
-        return render(request, 'admin_creacion')
+                user = CustomUsuario.objects.create_user(username = nombre[0:2] + '.' + apellido,
+                password = apellido[0].capitalize() + str(run) + '-' + str(dv),
+                is_admin = True)
+                user.save()
+                personal.save()
+        return redirect(admin_creacion)
     return render(request, 'html/admin_creacion.html', {'form': creacion_personal})
 
 def desconectar(request):
