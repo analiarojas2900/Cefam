@@ -1,0 +1,28 @@
+.box_modificacion {
+    height: 95%;
+    width: 90%;
+    border: solid black;
+    background-color: whitesmoke;
+    margin: auto;
+    padding: 0%;
+}
+
+.medicamentos_disponibles {
+    float: left;
+    height: 95%;
+    width: 48%;
+    border: solid black;
+    background-color: whitesmoke;
+    margin: 1%;
+    padding: 0%;
+}
+
+.medicamento_modificar {
+    float: right;
+    height: 95%;
+    width: 48%;
+    border: solid black;
+    background-color: whitesmoke;
+    margin: 1%;
+    padding: 0%;
+}

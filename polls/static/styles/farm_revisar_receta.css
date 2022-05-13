@@ -116,6 +116,23 @@
     color: #333;
 }
 
+.lista_medicamentos {
+    border: solid black;
+    height: 45%;
+    width: 98%;
+    margin: 1%;
+    padding: 0%;
+}
+
+.formulario_solic_medic {
+    float: right;
+    border: solid black;
+    height: 52%;
+    width: 98%;
+    margin: 1%;
+    padding: 0%;
+}
+
 /*++++++++ Fin Farmaceutico_revisar_receta ++++++++*/
 
 @media (max-width: 768px) {

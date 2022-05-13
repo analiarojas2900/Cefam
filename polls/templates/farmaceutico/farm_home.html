@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}Farmaceutico{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/farm_home.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block link0 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_home' %}">Inicio</a>
+{% endblock %}
+
+{% block link1 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_modificar_stock' %}">Modificar stock</a>
+{% endblock %}
+
+{% block link2 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_revisar_receta' %}">Recetas medicas</a>
+{% endblock %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+{% block main %}
+  <div class='box_paciente'>
+    <div class='buscador_paciente'>
+      <form class="d-flex" method='GET' action='{% url 'farm_home' %}'>
+        <input name='buscador_paciente' type='search' placeholder='Buscador'>
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+      </form>
+    </div>
+    {% if verif %}
+      {% for p in paciente %}
+      <div class='img_paciente'>
+        <img src='{{ p.img_paciente.url }}' width='100%' height='100%'>
+      </div>
+      <div class='informacion_paciente'>
+        <h2>{{ p.run_paciente }}</h2>
+        <h2>{{ p.dv_paciente }}</h2>
+        <h2>{{ p.nombre_paciente }}</h2>
+        <h2>{{ p.apellido_paciente }}</h2>
+        <h2>{{ p.edad_paciente }}</h2>
+        <h2>{{ p.sexo_paciente }}</h2>
+        <h2>{{ p.direccion_paciente }}</h2>
+        <h2>{{ p.mail_paciente }}</h2>
+        <h2>{{ p.numero_telefonico }}</h2>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class = 'img_paciente'>
+        <p>No se ha encontrado imagen</p>
+      </div>
+      <div class='informacion_paciente'>
+        <p>No se ha encontrado informacion con respecto al paciente solicitado</p>
+      </div>
+    {% endif %}
+  </div>   
+
+  <div class='box_stock'>
+    <div class='informacion_stock'>
+      {% for s in medicamento %}
+      <h2>{{ s.nombre_medicamento }}</h2>
+      <p>{{ s.fecha_elab_medicamento }}</p>
+      <p>{{ s.fecha_venc_medicamento }}</p>
+      <p>{{ s.cantidad_medicamento }}</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="box_opciones">
+    <div class='modificar_stock'>
+      <a href="{% url 'farm_modificar_stock' %}">Modificar Stock</a>
+    </div>
+    <div class='revisar_receta_medica'>
+      <a href="{% url 'farm_revisar_receta' %}">Revisar receta medica</a>  
+    </div>
+  </div>     
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>   
+{% endblock %}
