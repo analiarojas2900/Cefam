@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}Farmaceutico{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/farm_modificar_stock.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block link0 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_home' %}">Inicio</a>
+{% endblock %}
+
+{% block link1 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_modificar_stock' %}">Modificar stock</a>
+{% endblock %}
+
+{% block link2 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_revisar_receta' %}">Recetas medicas</a>
+{% endblock %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+{% block main %}
+    <div class='box_modificacion'>
+        <div class='medicamentos_disponibles'>
+            {% for m in medicamento %}
+                <h2>{{ m.nombre_medicamento }}</h2>
+                <p>{{ m.id }}</p>
+                <p>{{ m.fecha_elab_medicamento }}</p>
+                <p>{{ m.fecha_venc_medicamento }}</p>
+                <p>{{ m.cantidad_medicamento }}</p>
+            {% endfor %}
+        </div>
+        <div class='medicamento_modificar'>
+            <form method='post' action='{% url 'farm_modificar_stock' %}'>
+                {% csrf_token %}
+                <input name='id_medicamento' type='text' placeholder='Ingrese la id del medicamento'>
+                <table>
+                    {{ form_modificacion|crispy }}
+                </table>
+                <input type='submit' class='btn btn-primary' value='Buscar medicamento'>
+            </form>
+        </div>
+    </div>
+{% endblock %}

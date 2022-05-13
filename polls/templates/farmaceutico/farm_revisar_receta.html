@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}Farmaceutico{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/farm_revisar_receta.css' %}?{% now 'U' %}">
+{% endblock %}
+
+{% block link0 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_home' %}">Inicio</a>
+{% endblock %}
+
+{% block link1 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_modificar_stock' %}">Modificar stock</a>
+{% endblock %}
+
+{% block link2 %}
+<a class="nav-link active" aria-current="page" href="{% url 'farm_revisar_receta' %}">Recetas medicas</a>
+{% endblock %}
+
+{% block main %}
+  <div class='buscar_receta'>
+    <form class="d-flex" method='GET' action='{% url 'farm_revisar_receta' %}'>
+      {% csrf_token %}
+      <input name='buscador_receta' type='search' placeholder='Ingrese codigo de su receta'>
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+  </div>
+  
+  {% if verif %}
+    {% for r in receta %}
+    <div class='receta_medica'>
+      <h2>{{ r.id }}</h2>
+      <h2>{{ r.fecha_receta }}</h2>
+      <h2>{{ r.prescripcion_receta }}</h2>
+      <h2>{{ r.id_paciente.nombre_paciente }}</h2>
+      <h2>{{ r.id_paciente.run_paciente }}</h2>
+      <h2>{{ r.id_personal.nombre_personal }}</h2>
+      <h2>{{ r.id_personal.run_personal }}</h2>
+    </div>
+    <div class='box_medicamentos'>
+      <div class='medicamentos_solicitados'>
+        <div class='lista_medicamentos'>
+          <h2>{{ r.id_medicamento.nombre_medicamento }}</h2>
+          <p>id: {{ r.id_medicamento.id }}</p>
+          <p>cantidad actual: {{ r.id_medicamento.cantidad_medicamento }}
+          <p>cantidad a entregar: {{ r.cantidad_medicamentos }}</p>
+        </div>
+        <div class = 'formulario_solic_medic'>
+          {% include 'farmaceutico/farm_revisar_receta_med.html' %}
+        </div>
+      </div>
+      <div class='disponibilidad_medicamentos'>
+        {% for s in medicamento %}
+        <h2>{{ s.nombre_medicamento }}</h2>
+        <p>{{ s.id }}</p>
+        <p>{{ s.fecha_elab_medicamento }}</p>
+        <p>{{ s.fecha_venc_medicamento }}</p>
+        <p>{{ s.cantidad_medicamento }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+  <div class='receta_medica'>
+    <p>No se ha encontrado la receta solicitad</p>
+  </div>
+  <div class='box_medicamentos'>
+    <div class='medicamentos_solicitados'>
+      <p>No se han encontrado los medicamentos indicados en la receta</p>
+    </div>
+    <div class='disponibilidad_medicamentos'>
+      {% for s in medicamento %}
+      <h2>{{ s.nombre_medicamento }}</h2>
+      <p>{{ s.id }}</p>
+      <p>{{ s.fecha_elab_medicamento }}</p>
+      <p>{{ s.fecha_venc_medicamento }}</p>
+      <p>{{ s.cantidad_medicamento }}</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="box_opciones_receta">
+    <div class='agendar_entrega'>
+      <a href="#">Agendar Entrega</a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block titulo %}Medico{% endblock %}
 
@@ -17,26 +18,23 @@
 {% endblock %}
 
 {% block main %}
-  <div class='datos_paciente'>
-    <p>datos_paciente</p>
-  </div>
 
   <div class='formulario_consulta'>
-    <p>formulario_consulta</p>
-  </div>
-
-  <div class='medicamento_registrar'>
-    <p>medicamento_registrar</p>
+    <form method='post' action='{% url 'medico_receta_medica' %}'>
+      {% csrf_token %}
+      <table>
+        {{ form|crispy }}
+      </table>
+      <input type='submit' class='btn btn-primary' value='Registrar Receta'>
+    </form>
   </div>
 
   <div class="box_opciones_receta_medica">
     <div class='cancelar_receta'>
       <a href="{% url 'medico_home' %}">Cancelar Receta</a>
     </div>
-    <div class='finalizar_receta'>
-      <a href="{% url 'medico_home' %}">Finalizar Receta</a>
-    </div>
   </div>
+  
 {% endblock %}
 
 {% load static %}

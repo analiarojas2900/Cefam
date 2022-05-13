@@ -1,8 +1,6 @@
-from contextlib import nullcontext
-from pyexpat import model
-from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib import admin
 
 # Create your models here.
 
@@ -12,7 +10,7 @@ class Paciente(models.Model):
     dv_paciente = models.CharField(max_length=1)
     nombre_paciente = models.CharField(max_length=25)
     apellido_paciente = models.CharField(max_length=25)
-    edad_paciente = models.IntegerField()
+    edad_paciente = models.CharField(max_length=4)
     sexo_paciente = models.CharField(max_length=1)
     direccion_paciente = models.CharField(max_length=60)
     mail_paciente = models.CharField(max_length=25)
@@ -21,6 +19,9 @@ class Paciente(models.Model):
 
     def __str__(self):
         return self.run_paciente
+
+class PacienteAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
 
 #Personal
 class Personal(models.Model):
@@ -35,40 +36,50 @@ class Personal(models.Model):
 
     def __str__(self):
         return self.run_personal
+
+class PersonalAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
     
 
 #Medicamento
 class Medicamento(models.Model):
     nombre_medicamento = models.CharField(max_length=25)
-    fecha_elab_medicamento = models.DateField()
-    fecha_venc_medicamento = models.DateField()
+    fecha_elab_medicamento = models.DateField(null=True)
+    fecha_venc_medicamento = models.DateField(null=True)
     cantidad_medicamento = models.CharField(max_length=4)
 
     def __str__(self):
         return self.nombre_medicamento
 
+class MedicamentoAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
 
 #Receta_medica
 class Receta_medica(models.Model):
-    prescripcion_receta = models.TextField(max_length=200)
+    prescripcion_receta = models.CharField(max_length=200)
     fecha_receta = models.DateField()
-    id_personal = models.ForeignKey('Personal', on_delete=models.CASCADE, default=None)
-    id_medicamento = models.ForeignKey('Medicamento', on_delete=models.CASCADE, default=None)
-    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
+    cantidad_medicamentos = models.CharField(max_length=4)
+    id_personal = models.ForeignKey('Personal', on_delete=models.CASCADE)
+    id_medicamento = models.ForeignKey('Medicamento', on_delete=models.CASCADE)
+    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.prescripcion_receta
 
+class Receta_medicaAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
 
 #Ficha_paciente
 class Ficha_paciente(models.Model):
     tipo_ficha = models.CharField(max_length=25)
-    fecha_retiro = models.DateField()
-    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE, default=None)
-    id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE, default=None)
+    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE)
+    id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE)
     
     def __str__(self):
         return self.tipo_ficha
+
+class Ficha_pacienteAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
 
 #CustomUsuario
 class CustomUsuario(AbstractUser):
@@ -76,14 +87,18 @@ class CustomUsuario(AbstractUser):
     is_farmaceutico = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     
+class CustomUsuarioAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
     
 #Entrega Medicamentos
 class Entrega_medicamentos(models.Model):
-    tipo_entrega = models.CharField(max_length=25)
     cantidad_entregada = models.CharField(max_length=4)
     id_ficha = models.ForeignKey('Ficha_paciente', on_delete=models.CASCADE)
-    id_personal = models.ForeignKey('Personal', on_delete=models.CASCADE, default=None)
+    id_personal = models.ForeignKey('Personal', on_delete=models.CASCADE)
     id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE) 
 
     def __str__(self):
-        return self.tipo_entrega
+        return self.cantidad_entregada
+
+class Entrega_medicamentosAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
