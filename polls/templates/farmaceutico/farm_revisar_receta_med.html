@@ -1,8 +1,0 @@
-{% load crispy_forms_tags %}
-<form method='POST' action=''>
-    {% csrf_token %}
-    <table>
-        {{ form_entrega|crispy }}
-    </table>
-    <button class="btn btn-outline-success" type="submit">Entregar</button>
-</form>

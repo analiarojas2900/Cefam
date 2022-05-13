@@ -74,44 +74,44 @@ def farm_revisar_receta(request):
     buscar_receta = request.GET.get('buscador_receta')
     form_entrega = entrega_medicamento(request.POST, request.FILES)
     medicamento = Medicamento.objects.all()
+    ficha = Ficha_paciente.objects.all()
     receta = Receta_medica.objects.all()
     verif = False
     
     if buscar_receta and Receta_medica.objects.filter(Q(id = buscar_receta)):
         receta = Receta_medica.objects.filter(Q(id = buscar_receta))
+        ficha = Ficha_paciente.objects.filter(Q(id_receta = buscar_receta))
         verif = True
     
-    if form_entrega.is_valid and Medicamento.objects.filter(Q(id = form_entrega.data.get('id_medicamento'))):
-        ficha = Ficha_paciente.objects.filter(Q(id = form_entrega.data.get('id_ficha')))
-        personal = Personal.objects.filter(Q(id = form_entrega.data.get('id_personal')))
-        receta_upd = Receta_medica.objects.filter(Q(id = form_entrega.data.get('id_receta')))
-        medic = Medicamento.objects.filter(Q(id = form_entrega.data.get('id_medicamento')))
-        for m in medic:
-            for r in receta_upd:
-                cant_medic = m.cantidad_medicamento
-                cant_medic = int(cant_medic)
-                cant_entr = form_entrega.data.get('cant_entregada')
-                cant_entr = int(cant_entr)
-                cant_a_entr = r.cantidad_medicamentos
-                cant_a_entr = int(cant_a_entr)
-                cant_total_medic = cant_medic - cant_entr
-                cant_total_rec = cant_a_entr -  cant_entr
-
+    if form_entrega.is_valid and Ficha_paciente.objects.filter(Q(id = form_entrega.data.get('id_ficha'))):
+        ficha = Ficha_paciente.objects.filter(Q(id = form_entrega.data.get('id_ficha'))) 
         for f in ficha:
+            personal = Personal.objects.filter(Q(id = f.id_receta.id_personal.id))
+            receta_upd = Receta_medica.objects.filter(Q(id = f.id_receta.id))
+            medic = Medicamento.objects.filter(Q(id = f.id_receta.id_medicamento.id))
+            cant_medic = f.id_receta.id_medicamento.cantidad_medicamento
+            cant_medic = int(cant_medic)
+            cant_entr = form_entrega.data.get('cant_entregada')
+            cant_entr = int(cant_entr)
+            cant_a_entr = f.id_receta.cantidad_medicamentos
+            cant_a_entr = int(cant_a_entr)
+            cant_total_medic = cant_medic - cant_entr
+            cant_total_rec = cant_a_entr - cant_entr
             for p in personal:
                 for r in receta_upd:
-                    entrega = Entrega_medicamentos(cantidad_entregada = form_entrega.data.get('cant_entregada'),
+                    entrega = Entrega_medicamentos(cantidad_entregada = str(cant_entr),
                     id_ficha = f,
                     id_personal = p,
                     id_receta = r)
                     entrega.save()
-        
+
         medic = medic.update(cantidad_medicamento = str(cant_total_medic))
         receta_upd = receta_upd.update(cantidad_medicamentos = str(cant_total_rec))
 
     data = {
         'form_entrega': entrega_medicamento,
         'receta': receta, 
+        'ficha': ficha,
         'medicamento': medicamento, 
         'verif': verif
     }
@@ -204,8 +204,8 @@ def medico_receta_medica(request):
 def admin_creacion(request):
     if request.POST:
         form = creacion_personal(request.POST, request.FILES)
-        print(request.FILES)
         if form.is_valid():
+
             personal = Personal(run_personal = form.cleaned_data.get('run_personal'),
             dv_personal = form.cleaned_data.get('dv_personal'),
             nombre_personal = form.cleaned_data.get('nombre_personal'),
@@ -214,11 +214,13 @@ def admin_creacion(request):
             sexo_personal = form.cleaned_data.get('sexo_personal'),
             edad_personal = form.cleaned_data.get('edad_personal'),
             tipo = form.cleaned_data.get('tipo'))
+
             nombre = form.cleaned_data.get('nombre_personal')
             apellido = form.cleaned_data.get('apellido_personal')
             run = form.cleaned_data.get('run_personal')
             dv = form.cleaned_data.get('dv_personal')
             tipo = form.cleaned_data.get('tipo')
+
             if tipo == 'is_farm':
                 user = CustomUsuario.objects.create_user(username = nombre[0:2] + '.' + apellido,
                 password = apellido[0].capitalize() + str(run) + '-' + str(dv),
@@ -237,7 +239,8 @@ def admin_creacion(request):
                 is_admin = True)
                 user.save()
                 personal.save()
+
             messages.success(request, 'Usuario creado correctamente, su cuenta: \nnombre: ' + nombre[0:2] + '.' + apellido +
             '\ncontraseña: '+ apellido[0].capitalize() + str(run) + '-' + str(dv))
-        return redirect(admin_creacion)
+
     return render(request, 'admin/admin_creacion.html', {'form': creacion_personal})

@@ -24,16 +24,19 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 {% block main %}
+
     <div class='box_modificacion'>
+
         <div class='medicamentos_disponibles'>
-            {% for m in medicamento %}
-                <h2>{{ m.nombre_medicamento }}</h2>
-                <p>{{ m.id }}</p>
-                <p>{{ m.fecha_elab_medicamento }}</p>
-                <p>{{ m.fecha_venc_medicamento }}</p>
-                <p>{{ m.cantidad_medicamento }}</p>
-            {% endfor %}
+        {% for m in medicamento %}
+            <h2>{{ m.nombre_medicamento }}</h2>
+            <p>id medicamento: {{ m.id }}</p>
+            <p>fecha elab medicamento: {{ m.fecha_elab_medicamento }}</p>
+            <p>fecha venc medicamento: {{ m.fecha_venc_medicamento }}</p>
+            <p>cantidad medicamento: {{ m.cantidad_medicamento }}</p>
+        {% endfor %}
         </div>
+
         <div class='medicamento_modificar'>
             <form method='post' action='{% url 'farm_modificar_stock' %}'>
                 {% csrf_token %}
@@ -44,5 +47,6 @@
                 <input type='submit' class='btn btn-primary' value='Buscar medicamento'>
             </form>
         </div>
+        
     </div>
 {% endblock %}

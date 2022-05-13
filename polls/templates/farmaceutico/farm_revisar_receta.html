@@ -22,6 +22,7 @@
 {% endblock %}
 
 {% block main %}
+
   <div class='buscar_receta'>
     <form class="d-flex" method='GET' action='{% url 'farm_revisar_receta' %}'>
       {% csrf_token %}
@@ -32,27 +33,43 @@
   
   {% if verif %}
     {% for r in receta %}
+
     <div class='receta_medica'>
-      <h2>{{ r.id }}</h2>
-      <h2>{{ r.fecha_receta }}</h2>
-      <h2>{{ r.prescripcion_receta }}</h2>
-      <h2>{{ r.id_paciente.nombre_paciente }}</h2>
-      <h2>{{ r.id_paciente.run_paciente }}</h2>
-      <h2>{{ r.id_personal.nombre_personal }}</h2>
-      <h2>{{ r.id_personal.run_personal }}</h2>
+      <h2>id receta: {{ r.id }}</h2>
+      <h2>fecha receta: {{ r.fecha_receta }}</h2>
+      <h2>prescripcion: {{ r.prescripcion_receta }}</h2>
+      <h2>nombre paciente: {{ r.id_paciente.nombre_paciente }}</h2>
+      <h2>run paciente: {{ r.id_paciente.run_paciente }}</h2>
+      <h2>nombre personal: {{ r.id_personal.nombre_personal }}</h2>
+      <h2>run personal: {{ r.id_personal.run_personal }}</h2>
     </div>
+
     <div class='box_medicamentos'>
+
       <div class='medicamentos_solicitados'>
+
         <div class='lista_medicamentos'>
-          <h2>{{ r.id_medicamento.nombre_medicamento }}</h2>
-          <p>id: {{ r.id_medicamento.id }}</p>
-          <p>cantidad actual: {{ r.id_medicamento.cantidad_medicamento }}
-          <p>cantidad a entregar: {{ r.cantidad_medicamentos }}</p>
+          {% for f in ficha %}
+          <h2>{{ f.id_receta.id_medicamento.nombre_medicamento }}</h2>
+          <p>id medicamento: {{ f.id_receta.id_medicamento.id }}</p>
+          <p>run paciente: {{ f.id_paciente.run_paciente }}
+          <p>cantidad actual: {{ f.id_receta.id_medicamento.cantidad_medicamento }}
+          <p>cantidad a entregar: {{ f.id_receta.cantidad_medicamentos }}</p>
+          {% endfor %}
         </div>
+
         <div class = 'formulario_solic_medic'>
-          {% include 'farmaceutico/farm_revisar_receta_med.html' %}
+          <form method='POST' action=''>
+            {% csrf_token %}
+            <table>
+                {{ form_entrega|crispy }}
+            </table>
+            <button class="btn btn-outline-success" type="submit">Entregar</button>
+        </form>
         </div>
+
       </div>
+
       <div class='disponibilidad_medicamentos'>
         {% for s in medicamento %}
         <h2>{{ s.nombre_medicamento }}</h2>
@@ -62,16 +79,22 @@
         <p>{{ s.cantidad_medicamento }}</p>
         {% endfor %}
       </div>
+
     </div>
     {% endfor %}
+
   {% else %}
+
   <div class='receta_medica'>
     <p>No se ha encontrado la receta solicitad</p>
   </div>
+
   <div class='box_medicamentos'>
+
     <div class='medicamentos_solicitados'>
       <p>No se han encontrado los medicamentos indicados en la receta</p>
     </div>
+
     <div class='disponibilidad_medicamentos'>
       {% for s in medicamento %}
       <h2>{{ s.nombre_medicamento }}</h2>
@@ -81,6 +104,7 @@
       <p>{{ s.cantidad_medicamento }}</p>
       {% endfor %}
     </div>
+
   </div>
   {% endif %}
 
@@ -89,4 +113,5 @@
       <a href="#">Agendar Entrega</a>
     </div>
   </div>
+
 {% endblock %}

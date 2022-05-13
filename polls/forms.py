@@ -1,4 +1,5 @@
 from dataclasses import field
+from pyexpat import model
 from django import forms
 from .models import Entrega_medicamentos, Ficha_paciente, Personal, Receta_medica, Paciente, Medicamento
 
@@ -23,7 +24,7 @@ lista_fichas = ()
 lista_fichas = list(lista_fichas)
 ficha = Ficha_paciente.objects.all()
 for p in ficha:
-    lista_fichas.append([p.id, str('Ficha del tipo: ' + p.tipo_ficha)])
+    lista_fichas.append([p.id, str('Run paciente: ' + p.id_paciente.run_paciente)])
 lista_fichas = tuple(lista_fichas)
 
 lista_personal = ()
@@ -91,12 +92,5 @@ class modificar_stock(forms.Form):
 
 #Entrega Medicamento
 class entrega_medicamento(forms.Form):
-    id_medicamento = forms.ChoiceField(choices=lista_medicamentos)
     cant_entregada = forms.CharField(max_length=4)
     id_ficha = forms.ChoiceField(choices=lista_fichas)
-    id_personal = forms.ChoiceField(choices=lista_personal)
-    id_receta = forms.ChoiceField(choices=lista_recetas)
-
-    class Meta:
-        model = Entrega_medicamentos,
-        fields = ['cant_entregada', 'id_ficha', 'id_personal', 'id_receta']
