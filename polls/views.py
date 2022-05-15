@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Entrega_medicamentos, Ficha_paciente, Paciente, CustomUsuario, Personal, Medicamento, Receta_medica
+from .models import Entrega_medicamentos, Entrega_pendiente, Ficha_paciente, Paciente, CustomUsuario, Personal, Medicamento, Receta_medica
 from django.contrib.auth import authenticate, login, logout
-from .forms import creacion_personal, creacion_receta, entrega_medicamento, modificar_stock
+from .forms import creacion_personal, creacion_receta, modificar_stock
 from django.contrib import messages
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
+import pywhatkit as pwk
+import pyautogui as pg
+import time
 
 # Create your views here.
 
@@ -72,7 +77,7 @@ def farm_home(request):
 
 def farm_revisar_receta(request):
     buscar_receta = request.GET.get('buscador_receta')
-    form_entrega = entrega_medicamento(request.POST, request.FILES)
+    id_ficha_oculta = request.GET.get('ficha_oculta')
     medicamento = Medicamento.objects.all()
     ficha = Ficha_paciente.objects.all()
     receta = Receta_medica.objects.all()
@@ -83,33 +88,36 @@ def farm_revisar_receta(request):
         ficha = Ficha_paciente.objects.filter(Q(id_receta = buscar_receta))
         verif = True
     
-    if form_entrega.is_valid and Ficha_paciente.objects.filter(Q(id = form_entrega.data.get('id_ficha'))):
-        ficha = Ficha_paciente.objects.filter(Q(id = form_entrega.data.get('id_ficha'))) 
+    if Ficha_paciente.objects.filter(Q(id = id_ficha_oculta)):
+        ficha = Ficha_paciente.objects.filter(Q(id = id_ficha_oculta)) 
         for f in ficha:
-            personal = Personal.objects.filter(Q(id = f.id_receta.id_personal.id))
-            receta_upd = Receta_medica.objects.filter(Q(id = f.id_receta.id))
-            medic = Medicamento.objects.filter(Q(id = f.id_receta.id_medicamento.id))
-            cant_medic = f.id_receta.id_medicamento.cantidad_medicamento
-            cant_medic = int(cant_medic)
-            cant_entr = form_entrega.data.get('cant_entregada')
-            cant_entr = int(cant_entr)
-            cant_a_entr = f.id_receta.cantidad_medicamentos
-            cant_a_entr = int(cant_a_entr)
-            cant_total_medic = cant_medic - cant_entr
-            cant_total_rec = cant_a_entr - cant_entr
-            for p in personal:
-                for r in receta_upd:
-                    entrega = Entrega_medicamentos(cantidad_entregada = str(cant_entr),
+            if f.id_receta.id_medicamento.cantidad_medicamento == '0':
+                agendar = Entrega_pendiente(
+                    estado = 'Aun no se realiza la entrega',
+                    queda_stock = False,
+                    id_ficha = f
+                )
+                agendar.save()
+            else:
+                medic = Medicamento.objects.filter(Q(id = f.id_receta.id))
+                receta_upd = Receta_medica.objects.filter(Q(id = f.id_receta.id_medicamento.id))
+
+                cant_medic = f.id_receta.id_medicamento.cantidad_medicamento
+                cant_medic = int(cant_medic)
+                cant_entr = f.id_receta.cantidad_medicamentos
+                cant_entr = int(cant_entr)
+                cant_total_medic = cant_medic - cant_entr
+
+                entrega = Entrega_medicamentos(
+                    cantidad_entregada = str(cant_entr),
                     id_ficha = f,
-                    id_personal = p,
-                    id_receta = r)
-                    entrega.save()
+                )
+                entrega.save()
 
-        medic = medic.update(cantidad_medicamento = str(cant_total_medic))
-        receta_upd = receta_upd.update(cantidad_medicamentos = str(cant_total_rec))
-
+                medic = medic.update(cantidad_medicamento = str(cant_total_medic))
+                receta_upd = receta_upd.update(cantidad_medicamentos = '0')
+        
     data = {
-        'form_entrega': entrega_medicamento,
         'receta': receta, 
         'ficha': ficha,
         'medicamento': medicamento, 
@@ -123,9 +131,8 @@ def farm_modificar_stock(request):
 
     if request.POST:
         form_modificacion = modificar_stock(request.POST, request.FILES)
-        id_medicamento = request.POST.get('id_medicamento')
         if form_modificacion.is_valid:
-            medicamento = medicamento.filter(id = id_medicamento)
+            medicamento = Medicamento.objects.filter(id = form_modificacion.data.get('medicamento'))
             nombre = form_modificacion.data.get('nombre_medicamento')
             fecha_elab = form_modificacion.data.get('fecha_elab_medicamento')
             fecha_venc = form_modificacion.data.get('fecha_venc_medicamento')
@@ -138,6 +145,23 @@ def farm_modificar_stock(request):
                 medicamento.update(fecha_venc_medicamento = fecha_venc)
             if cantidad:
                 medicamento.update(cantidad_medicamento = cantidad)
+
+    for ep in Entrega_pendiente.objects.all():
+        if int(ep.id_ficha.id_receta.id_medicamento.cantidad_medicamento) > int(ep.id_ficha.id_receta.cantidad_medicamentos):
+            #Envio mail
+            subject = 'Medicamento disponible'
+            message = 'Le informamos que el medicamento: ' + ep.id_ficha.id_receta.id_medicamento.nombre_medicamento + ' ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo'
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [ep.id_ficha.id_receta.id_paciente.mail_paciente])
+
+            #Envio whatsapp
+            telefono = ep.id_ficha.id_receta.id_paciente.numero_telefonico
+            mensaje = 'Le informamos que el medicamento: ' + ep.id_ficha.id_receta.id_medicamento.nombre_medicamento + ' ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo'
+            pwk.sendwhatmsg_instantly(telefono, mensaje, wait_time=10)
+
+            #Eliminacion
+            #entr_p = Entrega_pendiente.objects.filter(id = ep.id)
+            #entr_p.delete()
+
 
     medicamento = Medicamento.objects.all()
 
@@ -182,7 +206,7 @@ def medico_receta_medica(request):
                     for pa in paciente:
                         receta_medica = Receta_medica(prescripcion_receta = form.cleaned_data.get('prescripcion_receta'),
                         fecha_receta = form.cleaned_data.get('fecha_receta'),
-                        cantidad_medicamentos = form.cleaned_data.get('cantidad_medicamento'),
+                        cantidad_medicamentos = form.data.get('cantidad_medicamentos'),
                         id_personal = p,
                         id_medicamento = m,
                         id_paciente = pa
@@ -206,14 +230,25 @@ def admin_creacion(request):
         form = creacion_personal(request.POST, request.FILES)
         if form.is_valid():
 
-            personal = Personal(run_personal = form.cleaned_data.get('run_personal'),
-            dv_personal = form.cleaned_data.get('dv_personal'),
-            nombre_personal = form.cleaned_data.get('nombre_personal'),
-            apellido_personal = form.cleaned_data.get('apellido_personal'),
-            mail_personal = form.cleaned_data.get('mail_personal'),
-            sexo_personal = form.cleaned_data.get('sexo_personal'),
-            edad_personal = form.cleaned_data.get('edad_personal'),
-            tipo = form.cleaned_data.get('tipo'))
+            sexo_personal = form.data.get('sexo_personal')
+            if sexo_personal == 'is_masc':
+                personal = Personal(run_personal = form.cleaned_data.get('run_personal'),
+                dv_personal = form.cleaned_data.get('dv_personal'),
+                nombre_personal = form.cleaned_data.get('nombre_personal'),
+                apellido_personal = form.cleaned_data.get('apellido_personal'),
+                mail_personal = form.cleaned_data.get('mail_personal'),
+                is_masculino = True,
+                edad_personal = form.cleaned_data.get('edad_personal'),
+                tipo = form.cleaned_data.get('tipo'))
+            else:
+                personal = Personal(run_personal = form.cleaned_data.get('run_personal'),
+                dv_personal = form.cleaned_data.get('dv_personal'),
+                nombre_personal = form.cleaned_data.get('nombre_personal'),
+                apellido_personal = form.cleaned_data.get('apellido_personal'),
+                mail_personal = form.cleaned_data.get('mail_personal'),
+                is_femenino = True,
+                edad_personal = form.cleaned_data.get('edad_personal'),
+                tipo = form.cleaned_data.get('tipo'))
 
             nombre = form.cleaned_data.get('nombre_personal')
             apellido = form.cleaned_data.get('apellido_personal')
