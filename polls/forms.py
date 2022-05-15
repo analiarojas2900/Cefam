@@ -13,20 +13,12 @@ tipos = (
     ('is_adm', 'Administrador')
 )
 
-lista_recetas = ()
-lista_recetas = list(lista_recetas)
-receta_medica = Receta_medica.objects.all()
-for p in receta_medica:
-    lista_recetas.append([p.id, str('Receta numero: ' + str(p.id))])
-lista_recetas = tuple(lista_recetas)
+sexo = (
+    ('is_masc', 'Masculino'),
+    ('is_feme', 'Femenino')
+)
 
-lista_fichas = ()
-lista_fichas = list(lista_fichas)
-ficha = Ficha_paciente.objects.all()
-for p in ficha:
-    lista_fichas.append([p.id, str('Run paciente: ' + p.id_paciente.run_paciente)])
-lista_fichas = tuple(lista_fichas)
-
+#Colocar dentro de una funcion
 lista_personal = ()
 lista_personal = list(lista_personal)
 personal = Personal.objects.all()
@@ -55,7 +47,7 @@ class creacion_personal(forms.Form):
     nombre_personal = forms.CharField(max_length=25)
     apellido_personal = forms.CharField(max_length=25)
     mail_personal = forms.EmailField()
-    sexo_personal = forms.CharField(max_length=1)
+    sexo_personal = forms.ChoiceField(choices=sexo)
     edad_personal = forms.CharField(max_length=3)
     tipo = forms.ChoiceField(choices=tipos)
 
@@ -81,16 +73,8 @@ class creacion_receta(forms.Form):
 
 #Modificar stock
 class modificar_stock(forms.Form):
+    medicamento = forms.ChoiceField(choices=lista_medicamentos, required=True)
     nombre_medicamento = forms.CharField(max_length=25, required=False)
     fecha_elab_medicamento = forms.DateField(required=False)
     fecha_venc_medicamento = forms.DateField(required=False)
     cantidad_medicamento = forms.CharField(max_length=4, required=False)
-
-    class Meta:
-        model = Medicamento,
-        fields = ['nombre_medicamento', 'fecha_elab_medicamento', 'fecha_venc_medicamento', 'cantidad_medicamento']
-
-#Entrega Medicamento
-class entrega_medicamento(forms.Form):
-    cant_entregada = forms.CharField(max_length=4)
-    id_ficha = forms.ChoiceField(choices=lista_fichas)

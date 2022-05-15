@@ -47,39 +47,19 @@
     <div class='box_medicamentos'>
 
       <div class='medicamentos_solicitados'>
-
-        <div class='lista_medicamentos'>
           {% for f in ficha %}
           <h2>{{ f.id_receta.id_medicamento.nombre_medicamento }}</h2>
           <p>id medicamento: {{ f.id_receta.id_medicamento.id }}</p>
           <p>run paciente: {{ f.id_paciente.run_paciente }}
           <p>cantidad actual: {{ f.id_receta.id_medicamento.cantidad_medicamento }}
           <p>cantidad a entregar: {{ f.id_receta.cantidad_medicamentos }}</p>
-          {% endfor %}
-        </div>
-
-        <div class = 'formulario_solic_medic'>
-          <form method='POST' action=''>
+          <form method='GET' action=''>
             {% csrf_token %}
-            <table>
-                {{ form_entrega|crispy }}
-            </table>
+            <input name='ficha_oculta' value={{ f.id }} type='hidden' placeholder='Ingrese codigo de su receta'>
             <button class="btn btn-outline-success" type="submit">Entregar</button>
-        </form>
-        </div>
-
+          </form>
+          {% endfor %}
       </div>
-
-      <div class='disponibilidad_medicamentos'>
-        {% for s in medicamento %}
-        <h2>{{ s.nombre_medicamento }}</h2>
-        <p>{{ s.id }}</p>
-        <p>{{ s.fecha_elab_medicamento }}</p>
-        <p>{{ s.fecha_venc_medicamento }}</p>
-        <p>{{ s.cantidad_medicamento }}</p>
-        {% endfor %}
-      </div>
-
     </div>
     {% endfor %}
 
@@ -93,16 +73,6 @@
 
     <div class='medicamentos_solicitados'>
       <p>No se han encontrado los medicamentos indicados en la receta</p>
-    </div>
-
-    <div class='disponibilidad_medicamentos'>
-      {% for s in medicamento %}
-      <h2>{{ s.nombre_medicamento }}</h2>
-      <p>{{ s.id }}</p>
-      <p>{{ s.fecha_elab_medicamento }}</p>
-      <p>{{ s.fecha_venc_medicamento }}</p>
-      <p>{{ s.cantidad_medicamento }}</p>
-      {% endfor %}
     </div>
 
   </div>

@@ -11,7 +11,8 @@ class Paciente(models.Model):
     nombre_paciente = models.CharField(max_length=25)
     apellido_paciente = models.CharField(max_length=25)
     edad_paciente = models.CharField(max_length=4)
-    sexo_paciente = models.CharField(max_length=1)
+    is_masculino = models.BooleanField(default=False)
+    is_femenino = models.BooleanField(default=False)
     direccion_paciente = models.CharField(max_length=60)
     mail_paciente = models.CharField(max_length=25)
     numero_telefonico = models.CharField(max_length=12)
@@ -30,7 +31,8 @@ class Personal(models.Model):
     nombre_personal = models.CharField(max_length=25)
     apellido_personal = models.CharField(max_length=25)
     mail_personal = models.EmailField()
-    sexo_personal = models.CharField(max_length=1)
+    is_masculino = models.BooleanField(default=False)
+    is_femenino = models.BooleanField(default=False)
     edad_personal = models.CharField(max_length=3)
     tipo = models.CharField(max_length=25)
 
@@ -72,7 +74,6 @@ class Receta_medicaAdmin(admin.ModelAdmin):
 #Ficha_paciente
 class Ficha_paciente(models.Model):
     tipo_ficha = models.CharField(max_length=25)
-    id_paciente = models.ForeignKey('Paciente', on_delete=models.CASCADE)
     id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE)
     
     def __str__(self):
@@ -94,11 +95,21 @@ class CustomUsuarioAdmin(admin.ModelAdmin):
 class Entrega_medicamentos(models.Model):
     cantidad_entregada = models.CharField(max_length=4)
     id_ficha = models.ForeignKey('Ficha_paciente', on_delete=models.CASCADE)
-    id_personal = models.ForeignKey('Personal', on_delete=models.CASCADE)
-    id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE) 
 
     def __str__(self):
         return self.cantidad_entregada
 
 class Entrega_medicamentosAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
+
+#Entregas Pendientes
+class Entrega_pendiente(models.Model):
+    estado = models.CharField(max_length=50)
+    queda_stock = models.BooleanField(default=True)
+    id_ficha = models.ForeignKey('Ficha_paciente', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.estado
+
+class Entrega_pendienteAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)

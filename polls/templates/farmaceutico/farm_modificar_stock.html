@@ -40,7 +40,6 @@
         <div class='medicamento_modificar'>
             <form method='post' action='{% url 'farm_modificar_stock' %}'>
                 {% csrf_token %}
-                <input name='id_medicamento' type='text' placeholder='Ingrese la id del medicamento'>
                 <table>
                     {{ form_modificacion|crispy }}
                 </table>

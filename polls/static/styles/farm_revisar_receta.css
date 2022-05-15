@@ -37,7 +37,7 @@
     float: left;
     border: solid black;
     height: 97%;
-    width: 48%;
+    width: 98%;
     margin: 1%;
 }
 
@@ -118,7 +118,7 @@
 
 .lista_medicamentos {
     border: solid black;
-    height: 45%;
+    height: 95%;
     width: 98%;
     margin: 1%;
     padding: 0%;
@@ -166,6 +166,7 @@
 
     .disponibilidad_medicamentos {
         height: 95%;
+
     }
 
     .box_opciones_receta {
