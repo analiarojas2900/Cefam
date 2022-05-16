@@ -71,17 +71,6 @@ class Receta_medica(models.Model):
 class Receta_medicaAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
-#Ficha_paciente
-class Ficha_paciente(models.Model):
-    tipo_ficha = models.CharField(max_length=25)
-    id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.tipo_ficha
-
-class Ficha_pacienteAdmin(admin.ModelAdmin):
-    readonly_fields = ('id',)
-
 #CustomUsuario
 class CustomUsuario(AbstractUser):
     is_medico = models.BooleanField(default=False)
@@ -94,7 +83,7 @@ class CustomUsuarioAdmin(admin.ModelAdmin):
 #Entrega Medicamentos
 class Entrega_medicamentos(models.Model):
     cantidad_entregada = models.CharField(max_length=4)
-    id_ficha = models.ForeignKey('Ficha_paciente', on_delete=models.CASCADE)
+    id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.cantidad_entregada
@@ -106,7 +95,7 @@ class Entrega_medicamentosAdmin(admin.ModelAdmin):
 class Entrega_pendiente(models.Model):
     estado = models.CharField(max_length=50)
     queda_stock = models.BooleanField(default=True)
-    id_ficha = models.ForeignKey('Ficha_paciente', on_delete=models.CASCADE)
+    id_receta = models.ForeignKey('Receta_medica', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.estado

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Entrega_medicamentos, Entrega_pendiente, Ficha_paciente, Paciente, CustomUsuario, Personal, Medicamento, Receta_medica
+from .models import Entrega_medicamentos, Entrega_pendiente, Paciente, CustomUsuario, Personal, Medicamento, Receta_medica
 from django.contrib.auth import authenticate, login, logout
 from .forms import creacion_personal, creacion_receta, modificar_stock
 from django.contrib import messages
@@ -7,8 +7,6 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 import pywhatkit as pwk
-import pyautogui as pg
-import time
 
 # Create your views here.
 
@@ -77,40 +75,38 @@ def farm_home(request):
 
 def farm_revisar_receta(request):
     buscar_receta = request.GET.get('buscador_receta')
-    id_ficha_oculta = request.GET.get('ficha_oculta')
+    id_receta_oculta = request.GET.get('id_receta_oculta')
     medicamento = Medicamento.objects.all()
-    ficha = Ficha_paciente.objects.all()
     receta = Receta_medica.objects.all()
     verif = False
     
     if buscar_receta and Receta_medica.objects.filter(Q(id = buscar_receta)):
         receta = Receta_medica.objects.filter(Q(id = buscar_receta))
-        ficha = Ficha_paciente.objects.filter(Q(id_receta = buscar_receta))
         verif = True
     
-    if Ficha_paciente.objects.filter(Q(id = id_ficha_oculta)):
-        ficha = Ficha_paciente.objects.filter(Q(id = id_ficha_oculta)) 
-        for f in ficha:
-            if f.id_receta.id_medicamento.cantidad_medicamento == '0':
+    if Receta_medica.objects.filter(Q(id = id_receta_oculta)):
+        receta_for = Receta_medica.objects.filter(Q(id = id_receta_oculta)) 
+        for r in receta_for:
+            if r.cantidad_medicamentos > r.id_medicamento.cantidad_medicamento:
                 agendar = Entrega_pendiente(
                     estado = 'Aun no se realiza la entrega',
                     queda_stock = False,
-                    id_ficha = f
+                    id_receta = r.id
                 )
                 agendar.save()
             else:
-                medic = Medicamento.objects.filter(Q(id = f.id_receta.id))
-                receta_upd = Receta_medica.objects.filter(Q(id = f.id_receta.id_medicamento.id))
+                receta_upd = Receta_medica.objects.filter(Q(id = r.id))
+                medic = Medicamento.objects.filter(Q(id = r.id_medicamento.id))
 
-                cant_medic = f.id_receta.id_medicamento.cantidad_medicamento
+                cant_medic = r.id_medicamento.cantidad_medicamento
                 cant_medic = int(cant_medic)
-                cant_entr = f.id_receta.cantidad_medicamentos
+                cant_entr = r.cantidad_medicamentos
                 cant_entr = int(cant_entr)
                 cant_total_medic = cant_medic - cant_entr
 
                 entrega = Entrega_medicamentos(
                     cantidad_entregada = str(cant_entr),
-                    id_ficha = f,
+                    id_receta = r.id,
                 )
                 entrega.save()
 
@@ -119,7 +115,6 @@ def farm_revisar_receta(request):
         
     data = {
         'receta': receta, 
-        'ficha': ficha,
         'medicamento': medicamento, 
         'verif': verif
     }
@@ -147,15 +142,15 @@ def farm_modificar_stock(request):
                 medicamento.update(cantidad_medicamento = cantidad)
 
     for ep in Entrega_pendiente.objects.all():
-        if int(ep.id_ficha.id_receta.id_medicamento.cantidad_medicamento) > int(ep.id_ficha.id_receta.cantidad_medicamentos):
+        if int(ep.id_receta.id_medicamento.cantidad_medicamento) > int(ep.id_receta.cantidad_medicamentos):
             #Envio mail
             subject = 'Medicamento disponible'
-            message = 'Le informamos que el medicamento: ' + ep.id_ficha.id_receta.id_medicamento.nombre_medicamento + ' ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo'
-            send_mail(subject, message, settings.EMAIL_HOST_USER, [ep.id_ficha.id_receta.id_paciente.mail_paciente])
+            message = 'Le informamos que el medicamento: ' + ep.id_receta.id_medicamento.nombre_medicamento + ' ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo'
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [ep.id_receta.id_paciente.mail_paciente])
 
             #Envio whatsapp
-            telefono = ep.id_ficha.id_receta.id_paciente.numero_telefonico
-            mensaje = 'Le informamos que el medicamento: ' + ep.id_ficha.id_receta.id_medicamento.nombre_medicamento + ' ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo'
+            telefono = ep.id_receta.id_paciente.numero_telefonico
+            mensaje = 'Le informamos que el medicamento: ' + ep.id_receta.id_medicamento.nombre_medicamento + ' ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo'
             pwk.sendwhatmsg_instantly(telefono, mensaje, wait_time=10)
 
             #Eliminacion

@@ -5,6 +5,7 @@
 
 {% block titulo %}Admin{% endblock %}
 
+
 {% block styles %}
 <link rel="stylesheet" href="{% static 'styles/admin_creacion.css' %}?{% now 'U' %}">
 {% endblock %}
@@ -21,11 +22,10 @@
         </ul>
         {% endif %}
         <form method='post' action='{% url 'admin_creacion' %}'>
-            {% csrf_token %}
-            <table>
-                {{ form|crispy }}
-            </table>
+            {% csrf_token %}                                                    
+            <table>{{ form|crispy  }}</table>
             <input type='submit' class='btn btn-primary' value='Registrar'>
         </form>
     </div>
+
 {% endblock %}
