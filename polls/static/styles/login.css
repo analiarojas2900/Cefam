@@ -14,7 +14,7 @@ main {
     padding-top: .5%;
     padding-bottom: .5%;
     background-color: #44bba4;
-    background-image: url("../images/fondo-login2.jpg");
+    background-image: url("../images/clean-medical-background_53876-116875.jpg");
     background-size: cover;
     background-position: center;
 }
@@ -23,7 +23,7 @@ main {
 /*++++++++ Inicio login ++++++++*/
 
 .user_card {
-    height: 400px;
+    height: 385px;
     width: 350px;
     margin-top: auto;
     margin-bottom: auto;
@@ -99,6 +99,9 @@ main {
     background-color: gold;
     color: black;
     text-align: center;
+    position: absolute;
+    bottom: 60%;
+    right: 0%;
 }
 
 /*++++++++ Fin login ++++++++*/
