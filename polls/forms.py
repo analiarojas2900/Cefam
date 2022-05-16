@@ -1,7 +1,5 @@
-from dataclasses import field
-from pyexpat import model
 from django import forms
-from .models import Entrega_medicamentos, Ficha_paciente, Personal, Receta_medica, Paciente, Medicamento
+from .models import  Paciente, Personal, Receta_medica, Medicamento
 
 #Create your forms here
 
@@ -19,26 +17,32 @@ sexo = (
 )
 
 #Colocar dentro de una funcion
-lista_personal = ()
-lista_personal = list(lista_personal)
-personal = Personal.objects.all()
-for p in personal:
-    lista_personal.append([p.id, str(p.nombre_personal + ' ' + p.apellido_personal)])
-lista_personal = tuple(lista_personal)
+def lista_personal():
+    lista_personal = ()
+    lista_personal = list(lista_personal)
+    personal = Personal.objects.all()
+    for p in personal:
+        lista_personal.append([p.id, str(p.nombre_personal + ' ' + p.apellido_personal)])
+    lista_personal = tuple(lista_personal)
+    return lista_personal
 
-lista_medicamentos = ()
-lista_medicamentos = list(lista_medicamentos)
-medicamento = Medicamento.objects.all()
-for m in medicamento:
-    lista_medicamentos.append([m.id, str(m.nombre_medicamento)])
-lista_medicamentos = tuple(lista_medicamentos)
+def lista_medicamentos():
+    lista_medicamentos = ()
+    lista_medicamentos = list(lista_medicamentos)
+    medicamento = Medicamento.objects.all()
+    for m in medicamento:
+        lista_medicamentos.append([m.id, str(m.nombre_medicamento)])
+    lista_medicamentos = tuple(lista_medicamentos)
+    return lista_medicamentos
 
-lista_pacientes = ()
-lista_pacientes = list(lista_pacientes)
-paciente = Paciente.objects.all()
-for p in paciente:
-    lista_pacientes.append([p.id, str(p.nombre_paciente + ' ' + p.apellido_paciente)])
-lista_pacientes = tuple(lista_pacientes)
+def lista_pacientes():
+    lista_pacientes = ()
+    lista_pacientes = list(lista_pacientes)
+    paciente = Paciente.objects.all()
+    for p in paciente:
+        lista_pacientes.append([p.id, str(p.nombre_paciente + ' ' + p.apellido_paciente)])
+    lista_pacientes = tuple(lista_pacientes)
+    return lista_pacientes
 
 #Creacion_personal
 class creacion_personal(forms.Form):
@@ -61,9 +65,9 @@ class creacion_receta(forms.Form):
     prescripcion_receta = forms.CharField(max_length=200)
     fecha_receta = forms.DateField()
     cantidad_medicamentos = forms.CharField(max_length=4)
-    id_personal = forms.ChoiceField(choices=lista_personal)
-    id_medicamento = forms.ChoiceField(choices=lista_medicamentos)
-    id_paciente = forms.ChoiceField(choices=lista_pacientes)
+    id_personal = forms.ChoiceField(choices=lista_personal())
+    id_medicamento = forms.ChoiceField(choices=lista_medicamentos())
+    id_paciente = forms.ChoiceField(choices=lista_pacientes())
 
     class Meta:
         model = Receta_medica,
@@ -73,7 +77,7 @@ class creacion_receta(forms.Form):
 
 #Modificar stock
 class modificar_stock(forms.Form):
-    medicamento = forms.ChoiceField(choices=lista_medicamentos, required=True)
+    medicamento = forms.ChoiceField(choices=lista_medicamentos(), required=True)
     nombre_medicamento = forms.CharField(max_length=25, required=False)
     fecha_elab_medicamento = forms.DateField(required=False)
     fecha_venc_medicamento = forms.DateField(required=False)

@@ -47,18 +47,16 @@
     <div class='box_medicamentos'>
 
       <div class='medicamentos_solicitados'>
-          {% for f in ficha %}
-          <h2>{{ f.id_receta.id_medicamento.nombre_medicamento }}</h2>
-          <p>id medicamento: {{ f.id_receta.id_medicamento.id }}</p>
-          <p>run paciente: {{ f.id_paciente.run_paciente }}
-          <p>cantidad actual: {{ f.id_receta.id_medicamento.cantidad_medicamento }}
-          <p>cantidad a entregar: {{ f.id_receta.cantidad_medicamentos }}</p>
+          <h2>{{ r.id_medicamento.nombre_medicamento }}</h2>
+          <p>id medicamento: {{ r.id_medicamento.id }}</p>
+          <p>run paciente: {{ r.id_paciente.run_paciente }}
+          <p>cantidad actual: {{ r.id_medicamento.cantidad_medicamento }}
+          <p>cantidad a entregar: {{ r.cantidad_medicamentos }}</p>
           <form method='GET' action=''>
             {% csrf_token %}
-            <input name='ficha_oculta' value={{ f.id }} type='hidden' placeholder='Ingrese codigo de su receta'>
+            <input name='id_receta_oculta' value={{ r.id }} type='hidden' placeholder='Ingrese codigo de su receta'>
             <button class="btn btn-outline-success" type="submit">Entregar</button>
           </form>
-          {% endfor %}
       </div>
     </div>
     {% endfor %}
