@@ -29,8 +29,8 @@
 
     <div class='buscador_paciente'>
       <form class="d-flex" method='GET' action='{% url 'farm_home' %}'>
-        <input name='buscador_paciente' type='search' placeholder='Buscador'>
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
+        <input name='buscador_paciente' type='search' placeholder='Ingrese rut del paciente'>
+        <button class="btn btn-outline-success" type="submit">Buscar Paciente</button>
       </form>
     </div>
 
@@ -42,15 +42,15 @@
       </div>
 
       <div class='informacion_paciente'>
-        <h2>run paciente: {{ p.run_paciente }}</h2>
-        <h2>dv paciente: {{ p.dv_paciente }}</h2>
-        <h2>nombre paciente: {{ p.nombre_paciente }}</h2>
-        <h2>apellido paciente: {{ p.apellido_paciente }}</h2>
-        <h2>edad paciente: {{ p.edad_paciente }}</h2>
-        <h2>sexo paciente: {{ p.sexo_paciente }}</h2>
-        <h2>direccion paciente: {{ p.direccion_paciente }}</h2>
-        <h2>mail paciente: {{ p.mail_paciente }}</h2>
-        <h2>numero telefonico: {{ p.numero_telefonico }}</h2>
+        <h4>Run paciente: {{ p.run_paciente }}</h4>
+        <p>Dv paciente: {{ p.dv_paciente }}</p>
+        <p>Nombre paciente: {{ p.nombre_paciente }}</p>
+        <p>Apellido paciente: {{ p.apellido_paciente }}</p>
+        <p>Edad paciente: {{ p.edad_paciente }}</p>
+        <p>Sexo paciente: {{ p.sexo_paciente }}</p>
+        <p>Direccion paciente: {{ p.direccion_paciente }}</p>
+        <p>Mail paciente: {{ p.mail_paciente }}</p>
+        <p>Numero telefonico: {{ p.numero_telefonico }}</p>
       </div>
 
       {% endfor %}
@@ -72,10 +72,12 @@
 
     <div class='informacion_stock'>
       {% for s in medicamento %}
-      <h2>{{ s.nombre_medicamento }}</h2>
-      <p>{{ s.fecha_elab_medicamento }}</p>
-      <p>{{ s.fecha_venc_medicamento }}</p>
-      <p>{{ s.cantidad_medicamento }}</p>
+      <div class = 'caja_med'>
+        <h3>{{ s.nombre_medicamento }}</h3>
+        <p>{{ s.fecha_elab_medicamento }}</p>
+        <p>{{ s.fecha_venc_medicamento }}</p>
+        <p>{{ s.cantidad_medicamento }}</p>
+      </div>
       {% endfor %}
     </div>
 

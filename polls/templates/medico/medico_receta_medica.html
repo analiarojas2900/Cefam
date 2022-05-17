@@ -20,19 +20,41 @@
 {% block main %}
 
   <div class='formulario_consulta'>
+    <div class='messages'>
+      {% if messages %}
+        <div class = 'mensaje'>
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %} 
+        </div>
+      {% endif %}
+    </div>
     <form method='post' action='{% url 'medico_receta_medica' %}'>
       {% csrf_token %}
-      <table>
-        {{ form|crispy }}
-      </table>
-      <input type='submit' class='btn btn-primary' value='Registrar Receta'>
+      <div class = 'fila'>
+        {{ form.prescripcion_receta|as_crispy_field  }}
+      </div>
+      <div class = 'fila'>
+        {{ form.fecha_receta|as_crispy_field  }}
+      </div>
+      <div class = 'fila'>
+        {{ form.cantidad_medicamentos|as_crispy_field  }}
+      </div>
+      <div class = 'fila'>
+        {{ form.id_personal|as_crispy_field  }}
+      </div>
+      <div class = 'fila'>
+        {{ form.id_medicamento|as_crispy_field  }}
+      </div>
+      <div class = 'fila'>
+        {{ form.id_paciente|as_crispy_field  }}
+      </div>
+      <div class = 'boton'>
+        <input type='submit' class='btn btn-primary' value='Registrar Receta'>
+      </div>
+      <div class = 'boton'>
+        <a href="{% url 'medico_home' %}" class='btn btn-danger'>Cancelar Receta</a>
+      </div>
     </form>
-  </div>
-
-  <div class="box_opciones_receta_medica">
-    <div class='cancelar_receta'>
-      <a href="{% url 'medico_home' %}">Cancelar Receta</a>
-    </div>
-  </div>
-  
+  </div>  
 {% endblock %}

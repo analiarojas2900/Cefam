@@ -33,3 +33,8 @@ Time: 15:44
 Phone Number: +56968782133
 Message: Le informamos que el medicamento: Melatonina ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo
 --------------------
+Date: 16/5/2022
+Time: 20:31
+Phone Number: +56968782133
+Message: Le informamos que el medicamento: Cefalmin ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo
+--------------------

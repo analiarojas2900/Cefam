@@ -14,17 +14,44 @@
     <!-- https://simpleisbetterthancomplex.com/tutorial/2018/11/28/advanced-form-rendering-with-django-crispy-forms.html
     Referencia para usar crispy_forms -->
     <div action = 'agregar_personal' class = 'box_formulario'>
+        <div class='messages'>
         {% if messages %}
-        <ul class='messages'>
+            <div class = 'mensaje'>
             {% for message in messages %}
-            <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-            {% endfor %}
-        </ul>
+                {{ message }}
+            {% endfor %} 
+            </div>
         {% endif %}
+        </div>
         <form method='post' action='{% url 'admin_creacion' %}'>
-            {% csrf_token %}                                                    
-            <table>{{ form|crispy  }}</table>
-            <input type='submit' class='btn btn-primary' value='Registrar'>
+            {% csrf_token %}   
+            <div class = 'fila'>
+                {{ form.run_personal|as_crispy_field  }}
+            </div>
+            <div class = 'fila'>
+                {{ form.dv_personal|as_crispy_field  }}
+            </div>
+            <div class = 'fila'>
+                {{ form.nombre_personal|as_crispy_field  }}
+            </div>
+            <div class = 'fila'>
+                {{ form.apellido_personal|as_crispy_field  }}
+            </div>
+            <div class = 'fila'>
+                {{ form.mail_personal|as_crispy_field  }}
+            </div>
+            <div class = 'fila'>
+                {{ form.sexo_personal|as_crispy_field  }}
+            </div>
+            <div class = 'fila'>
+                {{ form.edad_personal|as_crispy_field  }}
+            </div>
+            <div class = 'fila'>
+                {{ form.tipo|as_crispy_field  }}
+            </div>
+            <div style = 'text-align: center; margin-top: 4%;'>
+                <input type='submit' class='btn btn-primary' value='Registrar'>
+            </div>
         </form>
     </div>
 

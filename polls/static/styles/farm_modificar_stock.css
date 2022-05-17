@@ -2,7 +2,7 @@
     height: 95%;
     width: 90%;
     border: solid black;
-    background-color: whitesmoke;
+    background-color: rgb(173, 173, 173);
     margin: auto;
     padding: 0%;
 }
@@ -12,9 +12,12 @@
     height: 95%;
     width: 48%;
     border: solid black;
-    background-color: whitesmoke;
+    background-color: rgb(240, 240, 240);
     margin: 1%;
     padding: 0%;
+    padding: 1%;
+    overflow-y: scroll;
+    padding-bottom: 0%;
 }
 
 .medicamento_modificar {
@@ -22,7 +25,44 @@
     height: 95%;
     width: 48%;
     border: solid black;
-    background-color: whitesmoke;
+    text-align: center;
+    background-color: rgb(240, 240, 240);
     margin: 1%;
     padding: 0%;
+}
+
+.fila {
+    width: 100%;
+    text-align: center;
+}
+
+.boton {
+    text-align: center;
+    margin-top: 4%;
+}
+
+.messages {
+    height: 10%;
+    padding: 0%;
+    margin: auto;
+    background-color: rgb(240, 240, 240);
+    text-align: center;
+}
+
+.mensaje {
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    background-color: gold;
+    color: black;
+    text-align: center;
+}
+
+.caja_med {
+    width: 32%;
+    border: solid black;
+    margin: 0%;
+    margin-bottom: 8px;
+    text-align: center;
+    display: inline-block;
 }

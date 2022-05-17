@@ -3,7 +3,7 @@
 .receta_medica {
     float: left;
     border: solid black;
-    background-color: whitesmoke;
+    background-color: rgb(173, 173, 173);
     height: 100%;
     width: 48.5%;
     margin: 0%;
@@ -11,10 +11,38 @@
     margin-right: .5%;
 }
 
+.receta_medica p {
+    font-size: 19px;
+}
+
+.box_datos {
+    border: solid black;
+    background-color: rgb(240, 240, 240);
+    width: 98%;
+    margin: 1%;
+    margin-top: .5%;
+    margin-right: .5%;
+    padding: 5%;
+    text-align: center;
+    padding-bottom: 4%;
+}
+
+.box_datos :nth-child(1) {
+    height: 40%;
+}
+
+.box_datos :nth-child(2) {
+    height: 30%;
+}
+
+.box_datos :nth-child(3) {
+    height: 30%;
+}
+
 .buscar_receta {
     float: right;
     border: solid black;
-    background-color: whitesmoke;
+    background-color: rgb(240, 240, 240);
     height: 10%;
     width: 48.5%;
     margin: 0%;
@@ -22,10 +50,29 @@
     margin-right: 1%;
 }
 
+.buscar_receta form {
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+}
+
+.buscar_receta input {
+    width: 65%;
+    height: 60%;
+    text-align: center;
+}
+
+.buscar_receta button {
+    width: 30%;
+    height: 60%;
+}
+
 .box_medicamentos {
     float: right;
     border: solid black;
-    background-color: whitesmoke;
+    background-color: rgb(173, 173, 173);
     height: 67.5%;
     width: 48.5%;
     margin-top: 1%;
@@ -34,11 +81,26 @@
 }
 
 .medicamentos_solicitados {
-    float: left;
     border: solid black;
+    background-color: rgb(240, 240, 240);
+    text-align: center;
     height: 97%;
     width: 98%;
     margin: 1%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0%;
+}
+
+.interior_receta {
+    float: right;
+    border: solid black;
+    background-color: rgb(240, 240, 240);
+    padding: 4%;
+    height: 97%;
+    width: 98%;
+    margin: 1%;
+    overflow-y: scroll;
 }
 
 .disponibilidad_medicamentos {
@@ -66,7 +128,7 @@
     float: left;
     border: solid black;
     height: 89%;
-    width: 48%;
+    width: 98%;
     margin: 1%;
     padding: 0%;
 }
@@ -92,7 +154,7 @@
 .dar_medicamento {
     float: right;
     border: solid black;
-    height: 89%;
+    height: 86%;
     width: 48%;
     margin: 1%;
     padding: 0%;
@@ -131,6 +193,25 @@
     width: 98%;
     margin: 1%;
     padding: 0%;
+}
+
+.messages {
+    height: 20%;
+    padding: 0%;
+    margin: auto;
+    background-color: rgb(240, 240, 240);
+    text-align: center;
+}
+
+.mensaje {
+    width: 100%;
+    height: 100%;
+    padding-top: 3%;
+    list-style: none;
+    background-color: gold;
+    color: black;
+    text-align: center;
+    align-items: center;
 }
 
 /*++++++++ Fin Farmaceutico_revisar_receta ++++++++*/
