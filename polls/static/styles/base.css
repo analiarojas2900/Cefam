@@ -49,8 +49,14 @@ button {
     margin: 10px
 }
 
+.img_logo {
+    width: 5%;
+    height: 100%;
+}
+
 .img_logo img{
-    max-width: 20%;
+    width: 100%;
+    height: 100%;
 }
 
 
