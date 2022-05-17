@@ -28,22 +28,46 @@
     <div class='box_modificacion'>
 
         <div class='medicamentos_disponibles'>
-        {% for m in medicamento %}
-            <h2>{{ m.nombre_medicamento }}</h2>
-            <p>id medicamento: {{ m.id }}</p>
-            <p>fecha elab medicamento: {{ m.fecha_elab_medicamento }}</p>
-            <p>fecha venc medicamento: {{ m.fecha_venc_medicamento }}</p>
-            <p>cantidad medicamento: {{ m.cantidad_medicamento }}</p>
+            {% for m in medicamento %}
+            <div class = 'caja_med'>
+                <h2>{{ m.nombre_medicamento }}</h2>
+                <p>{{ m.fecha_elab_medicamento }}</p>
+                <p>{{ m.fecha_venc_medicamento }}</p>
+                <p>{{ m.cantidad_medicamento }}</p>
+            </div>
         {% endfor %}
         </div>
 
         <div class='medicamento_modificar'>
+            <div class='messages'>
+                {% if messages %}
+                  <div class = 'mensaje'>
+                  {% for message in messages %}
+                    {{ message }}
+                  {% endfor %} 
+                  </div>
+                {% endif %}
+            </div>
             <form method='post' action='{% url 'farm_modificar_stock' %}'>
                 {% csrf_token %}
-                <table>
-                    {{ form_modificacion|crispy }}
-                </table>
-                <input type='submit' class='btn btn-primary' value='Buscar medicamento'>
+                <div class = 'fila'>
+                    {{ form_modificacion.medicamento|as_crispy_field  }}
+                </div>
+                <div class = 'fila'>
+                    {{ form_modificacion.nombre_medicamento|as_crispy_field  }}
+                </div>
+                <div class = 'fila'>
+                    {{ form_modificacion.fecha_elab_medicamento|as_crispy_field  }}
+                </div>
+                <div class = 'fila'>
+                    {{ form_modificacion.fecha_venc_medicamento|as_crispy_field  }}
+                </div>
+                <div class = 'fila'>
+                    {{ form_modificacion.cantidad_medicamento|as_crispy_field  }}
+                </div>
+                <div class = 'boton'>
+                    <input type='submit' class='btn btn-primary' value='Buscar medicamento'>
+                </div>          
             </form>
         </div>
         

@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 import pywhatkit as pwk
+import keyboard as k
 
 # Create your views here.
 
@@ -79,22 +80,32 @@ def farm_revisar_receta(request):
     medicamento = Medicamento.objects.all()
     receta = Receta_medica.objects.all()
     verif = False
+    verif2 = True
     
     if buscar_receta and Receta_medica.objects.filter(Q(id = buscar_receta)):
         receta = Receta_medica.objects.filter(Q(id = buscar_receta))
         verif = True
+        for r in receta:
+            if r.cantidad_medicamentos == '0':
+                verif2 = False
     
     if Receta_medica.objects.filter(Q(id = id_receta_oculta)):
+        verif = True
+        receta = Receta_medica.objects.filter(Q(id = id_receta_oculta))
         receta_for = Receta_medica.objects.filter(Q(id = id_receta_oculta)) 
         for r in receta_for:
-            if r.cantidad_medicamentos > r.id_medicamento.cantidad_medicamento:
+            cantidad_receta = int(r.cantidad_medicamentos)
+            cantidad_stock = int(r.id_medicamento.cantidad_medicamento)
+            if cantidad_receta > cantidad_stock:
                 agendar = Entrega_pendiente(
                     estado = 'Aun no se realiza la entrega',
                     queda_stock = False,
-                    id_receta = r.id
+                    id_receta = r
                 )
                 agendar.save()
+                messages.success(request, 'Solicitud agendada como pendiente, al momento de haber medicamentos se enviara mail y wsp para notificar')
             else:
+                verif2 = False
                 receta_upd = Receta_medica.objects.filter(Q(id = r.id))
                 medic = Medicamento.objects.filter(Q(id = r.id_medicamento.id))
 
@@ -106,7 +117,7 @@ def farm_revisar_receta(request):
 
                 entrega = Entrega_medicamentos(
                     cantidad_entregada = str(cant_entr),
-                    id_receta = r.id,
+                    id_receta = r
                 )
                 entrega.save()
 
@@ -116,7 +127,8 @@ def farm_revisar_receta(request):
     data = {
         'receta': receta, 
         'medicamento': medicamento, 
-        'verif': verif
+        'verif': verif,
+        'verif2': verif2
     }
 
     return render(request, 'farmaceutico/farm_revisar_receta.html', data)
@@ -152,10 +164,11 @@ def farm_modificar_stock(request):
             telefono = ep.id_receta.id_paciente.numero_telefonico
             mensaje = 'Le informamos que el medicamento: ' + ep.id_receta.id_medicamento.nombre_medicamento + ' ya se encuentra disponible, acerquese a su sucursal mas cercana para poder solicitarlo'
             pwk.sendwhatmsg_instantly(telefono, mensaje, wait_time=10)
+            k.press_and_release('enter')
 
             #Eliminacion
-            #entr_p = Entrega_pendiente.objects.filter(id = ep.id)
-            #entr_p.delete()
+            entr_p = Entrega_pendiente.objects.filter(id = ep.id)
+            entr_p.delete()
 
 
     medicamento = Medicamento.objects.all()

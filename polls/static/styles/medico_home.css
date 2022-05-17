@@ -1,13 +1,104 @@
 /*++++++++ Medico_home ++++++++*/
 
+.box_paciente_med {
+    float: left;
+    height: 100%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: 1%;
+    margin-right: .5%;
+    padding: 0%;
+    border: solid black;
+    background-color: rgb(173, 173, 173);
+}
+
+.buscador_paciente {
+    float: right;
+    border: solid black;
+    background-color: rgb(240, 240, 240);
+    text-align: center;
+    height: 30%;
+    width: 66.5%;
+    margin: 1%;
+}
+
+.buscador_paciente form {
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+}
+
+.buscador_paciente input {
+    width: 60%;
+    height: 20%;
+    text-align: center;
+}
+
+.buscador_paciente button {
+    width: 30%;
+    height: 20%;
+}
+
+.img_paciente {
+    float: left;
+    border: solid black;
+    background-color: rgb(240, 240, 240);
+    height: 30%;
+    width: 30%;
+    margin: 1%;
+    margin-right: .5%;
+}
+
 .informacion_paciente {
     float: left;
     border: solid black;
+    background-color: rgb(240, 240, 240);
     height: 66%;
     width: 98%;
     margin: 1%;
     margin-top: .5%;
     margin-right: .5%;
+    padding: 5%;
+    overflow-y: scroll;
+    padding-bottom: 0%;
+}
+
+.informacion_paciente p {
+    font-size: 19px;
+}
+
+.box_stock {
+    float: right;
+    height: 80%;
+    width: 48.5%;
+    margin: 0%;
+    margin-left: .5%;
+    margin-right: 1%;
+    padding: 0%;
+    border: solid black;
+    background-color: rgb(173, 173, 173);
+}
+
+.informacion_stock {
+    float: right;
+    border: solid black;
+    background-color: rgb(240, 240, 240);
+    padding: 4%;
+    height: 97%;
+    width: 98%;
+    margin: 1%;
+    overflow-y: scroll;
+}
+
+.caja_med {
+    width: 32%;
+    border: solid black;
+    margin: 0%;
+    margin-bottom: 8px;
+    text-align: center;
+    display: inline-block;
 }
 
 .hacer_receta_medica {
@@ -20,7 +111,16 @@
     margin-right: 1%;
 }
 
-.hacer_receta_medica a {
+.interior_envio {
+    float: right;
+    border: solid black;
+    height: 86%;
+    width: 98%;
+    margin: 1%;
+    padding: 0%;
+}
+
+.interior_envio a {
     background-color: #333;
     color: whitesmoke;
     text-align: center;
@@ -33,7 +133,7 @@
     text-decoration: none;
 }
 
-.hacer_receta_medica a:hover {
+.interior_envio a:hover {
     background-color: whitesmoke;
     color: #333;
 }
