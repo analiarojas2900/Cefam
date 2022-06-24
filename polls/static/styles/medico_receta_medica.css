@@ -1,13 +1,14 @@
 /*++++++++ Receta_medica ++++++++*/
 
 .formulario_consulta {
-    height: 70%;
-    width: 20%;
-    border: solid rgb(54, 19, 19);
-    background-color: rgb(240, 240, 240);
-    margin: auto;
-    margin-top: 4%;
-    padding: 0%;
+    border: solid #361313;
+    background-color: #f0f0f0;
+    max-width: 900px;
+	width: 20%;
+	margin: auto;
+	padding: 50px;
+	border-radius: 5%;
+    margin-top: 2%;
 }
 
 .messages {

@@ -1,12 +1,12 @@
 .box_formulario {
-    height: 80%;
-    width: 20%;
     border: solid #361313;
     background-color: #f0f0f0;
-    margin: auto;
-    margin-top: 4%;
-    padding: 0%;
-    border-radius: 5%;
+    max-width: 900px;
+	width: 60%;
+	margin: auto;
+	padding: 50px;
+	border-radius: 10%;
+    margin-top: 2%;
 }
 
 .messages {
@@ -14,16 +14,13 @@
     margin: auto;
     background-color: #f0f0f0;
     text-align: center;
-    border-radius: 5%;
 }
 
 .mensaje {
-    width: 100%;
     list-style: none;
     background-color: #ffd700;
     color: black;
     text-align: center;
-    border-radius: 10%;
     margin-right: 10px;
     
 }
